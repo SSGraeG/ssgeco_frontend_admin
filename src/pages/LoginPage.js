@@ -21,13 +21,8 @@ const LoginPage = ({ setAdminStatus }) => {
         const token = response.data.token;
         localStorage.setItem('token', token);
 
-        // 여기서 isAdmin 값을 서버에서 받아오거나, 특정 조건으로 판단하여 설정
-        const isAdmin = true; // 예시로 어드민 권한을 가진 사용자로 가정
-
-        setAdminStatus(isAdmin); // 어드민 상태를 전역 상태로 설정
-
         alert('로그인이 완료되었습니다.');
-        navigate('/admin'); // 로그인 성공 시 어드민 페이지로 이동
+        navigate('/'); // 로그인 성공 시 어드민 페이지로 이동
       } else {
         alert('이메일과 비밀번호를 모두 입력하세요.');
       }

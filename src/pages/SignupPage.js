@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 const SignupPage = () => {
   const [userId, setUserId] = useState('');
   const [userPwd, setUserPwd] = useState('');
-  const [selectedSchema, setSelectedSchema] = useState('editor'); // 기본값은 'editor'
   const navigate = useNavigate();
 
   const handleSignup = async () => {
@@ -16,8 +15,7 @@ const SignupPage = () => {
         const response = await axios.post('http://localhost:5000/login/signup', {
           userId: userId,
           userPwd1: userPwd,
-          selectedSchema: selectedSchema,
-        });
+                });
 
         const token = response.data.token;
         alert('회원가입이 완료되었습니다.');
@@ -47,14 +45,6 @@ const SignupPage = () => {
         <Form.Group controlId="formUserPwd">
           <Form.Label>비밀번호:</Form.Label>
           <Form.Control type="password" placeholder="비밀번호" value={userPwd} onChange={(e) => setUserPwd(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group controlId="formSchema">
-          <Form.Label>사용할 스키마:</Form.Label>
-          <Form.Control as="select" value={selectedSchema} onChange={(e) => setSelectedSchema(e.target.value)}>
-            <option value="editor">Editor 스키마</option>
-            <option value="editor2">Editor2 스키마</option>
-          </Form.Control>
         </Form.Group>
 
         <Button variant="primary" onClick={handleSignup}>

@@ -1,5 +1,3 @@
-// AdminPage.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,13 +8,6 @@ import { Link, useNavigate } from 'react-router-dom';
 const AdminPage = ({ isAdmin }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!isAdmin) {
-      // 권한이 없는 사용자가 어드민 페이지에 접근할 때 홈 페이지로 리다이렉트
-      navigate('/');
-    }
-  }, [isAdmin, navigate]);
-
   const [data, setData] = useState(null);
   const [selectedTab, setSelectedTab] = useState('all');
   const [sortBy, setSortBy] = useState(null);
@@ -24,30 +15,28 @@ const AdminPage = ({ isAdmin }) => {
   const [DonutChartData, setDonutChartData] = useState({ win: 0, defeat: 0 });
   const [PChartData, setPChartData] = useState({ Delivery: 0, ECumus: 0, Other: 0 });
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/api/get_data');
-      setData(response.data);
-
-      const subCount = response.data.users.filter((user) => user.subscription_status === 'yes').length;
-      const noSubCount = response.data.users.filter((user) => user.subscription_status === 'no').length;
-
-      const c1Count = response.data.users.filter((user) => user.category === 'Delivery').length;
-      const c2Count = response.data.users.filter((user) => user.category === 'ECumus').length;
-      const c3Count = response.data.users.filter((user) => user.category === 'Other').length;
-
-      setDonutChartData({ win: subCount, defeat: noSubCount });
-      setPChartData({ Delivery: c1Count, ECumus: c2Count, Other: c3Count });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   useEffect(() => {
-    if (isAdmin) {
-      fetchData();
-    }
-  }, [isAdmin]);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/get_data');
+        setData(response.data);
+
+        const subCount = response.data.users.filter((user) => user.subscription_status === 'yes').length;
+        const noSubCount = response.data.users.filter((user) => user.subscription_status === 'no').length;
+
+        const c1Count = response.data.users.filter((user) => user.category === 'Delivery').length;
+        const c2Count = response.data.users.filter((user) => user.category === 'ECumus').length;
+        const c3Count = response.data.users.filter((user) => user.category === 'Other').length;
+
+        setDonutChartData({ win: subCount, defeat: noSubCount });
+        setPChartData({ Delivery: c1Count, ECumus: c2Count, Other: c3Count });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); // useEffect 두 번째 인자에 빈 배열을 전달하여 컴포넌트 마운트 시에만 실행되도록 설정
 
   const handleSort = (field) => {
     if (sortBy === field) {
@@ -63,9 +52,9 @@ const AdminPage = ({ isAdmin }) => {
   };
 
   const renderTable = () => {
-    if (!isAdmin) {
-      return <p className="mt-4">You don't have permission to access this page.</p>;
-    }
+    // if (!isAdmin) {
+    //   return <p className="mt-4">You don't have permission to access this page.</p>;
+    // }
 
     if (!data || !data.users) {
       return <p className="mt-4">No data available</p>;
@@ -135,7 +124,7 @@ const AdminPage = ({ isAdmin }) => {
         <button className="btn btn-info mr-2" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
         <button className="btn btn-info mr-2" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
       </div>
-  
+
       {renderTable()}
       <div className="mt-4 d-flex justify-content-between">
         <div>
@@ -148,8 +137,7 @@ const AdminPage = ({ isAdmin }) => {
         </div>
       </div>
       <div>
-        
-      {/* 홈으로 이동하는 Link 버튼 추가 */}
+        {/* 홈으로 이동하는 Link 버튼 추가 */}
         <Link to="/" className="btn btn-primary mr-2">홈으로 이동</Link>
       </div>
     </div>
