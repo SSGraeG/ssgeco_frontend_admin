@@ -14,7 +14,7 @@ const SignupPage = () => {
       if (userId && userPwd) {
         const response = await axios.post('http://localhost:5000/login/signup', {
           userId: userId,
-          userPwd1: userPwd,
+          userPwd: userPwd,
                 });
 
         const token = response.data.token;

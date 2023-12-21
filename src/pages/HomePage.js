@@ -1,21 +1,20 @@
-// HomePage.js
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS 파일을 import
+import { Link, useNavigate } from 'react-router-dom'; // useHistory 대신 useNavigate 사용
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); // useHistory 대신 useNavigate 사용
 
   useEffect(() => {
-    // localStorage에서 토큰을 가져와서 로그인 상태를 확인
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // 토큰이 있으면 로그인 상태로 간주
+    setIsLoggedIn(!!token);
   }, []);
 
   const handleLogout = () => {
-    // 로그아웃 시 localStorage에서 토큰 제거
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (
@@ -27,14 +26,12 @@ const Home = () => {
       <nav>
         <ul className="list-inline">
           {isLoggedIn ? (
-            // 로그인 상태일 때 로그아웃 버튼 표시
             <li className="list-inline-item">
               <button className="btn btn-danger" onClick={handleLogout}>
                 로그아웃
               </button>
             </li>
           ) : (
-            // 로그인 상태가 아닐 때 로그인 및 회원가입 버튼 표시
             <>
               <li className="list-inline-item">
                 <Link to="/login" className="btn btn-primary">
