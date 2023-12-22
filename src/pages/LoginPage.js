@@ -17,10 +17,13 @@ const LoginPage = ({ setAdminStatus }) => {
           email: email,
           password: password,
         });
-
-        const token = response.data.token;
+  
+        const { token, company_id } = response.data;
+  
+        // 토큰과 company_id를 localStorage에 저장
         localStorage.setItem('token', token);
-
+        localStorage.setItem('company_id', company_id);
+  
         alert('로그인이 완료되었습니다.');
         navigate('/'); // 로그인 성공 시 어드민 페이지로 이동
       } else {
