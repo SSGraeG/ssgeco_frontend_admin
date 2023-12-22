@@ -52,7 +52,7 @@ const Home = () => {
             </>
           )}
           <li className="list-inline-item">
-            <Link to="/admin" className="btn btn-warning">
+            <Link to="/rowadmin" className="btn btn-warning">
               Admin
             </Link>
           </li>

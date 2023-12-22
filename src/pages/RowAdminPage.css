@@ -1,0 +1,63 @@
+.admin-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .home-link {
+    text-decoration: none;
+  }
+  
+  .home-button {
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .admin-section {
+    margin-bottom: 30px;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .user-table th,
+  .user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .coupon-form label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .coupon-form select,
+  .coupon-form input {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+  
+  .coupon-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .coupon-list li {
+    margin-bottom: 10px;
+  }
+  
