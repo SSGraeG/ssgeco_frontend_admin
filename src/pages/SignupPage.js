@@ -9,22 +9,14 @@ const SignupPage = () => {
   const [userPwd, setUserPwd] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [startDate, setStartDate] = useState('');
-  const [industryCategory, setIndustryCategory] = useState('Other');
+  const [aiCategory, setAICategory] = useState('일회용기 세척 여부 AI');
+  const [infraCategory, setInfraCategory] = useState('Case 1');
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [expirationDate, setExpirationDate] = useState('');
+
   const navigate = useNavigate();
 
   const handleStartDateChange = (e) => {
-    const enteredStartDate = e.target.value;
-    setStartDate(enteredStartDate);
-
-    // Automatically calculate expiration date: 1 year later
-    const dateObject = new Date(enteredStartDate);
-    dateObject.setFullYear(dateObject.getFullYear() + 1);
-
-    // Format the date to be sent to the server
-    const formattedExpirationDate = dateObject.toISOString().split('T')[0];
-    setExpirationDate(formattedExpirationDate);
+    setStartDate(e.target.value);
   };
 
   const handleSignup = async () => {
@@ -36,7 +28,8 @@ const SignupPage = () => {
           name: username,
           phone: contactNumber,
           start_date: startDate,
-          industryCategory: industryCategory,
+          aiCategory: aiCategory,
+          infraCategory: infraCategory,
           isSubscribed: isSubscribed,
         });
 
@@ -85,16 +78,29 @@ const SignupPage = () => {
           <Form.Control type="date" value={startDate} onChange={handleStartDateChange} />
         </Form.Group>
 
-        <Form.Group controlId="formIndustryCategory">
-          <Form.Label>산업별 카테고리:</Form.Label>
+        <Form.Group controlId="formAICategory">
+          <Form.Label>AI 카테고리:</Form.Label>
           <Form.Control
             as="select"
-            value={industryCategory}
-            onChange={(e) => setIndustryCategory(e.target.value)}
+            value={aiCategory}
+            onChange={(e) => setAICategory(e.target.value)}
           >
-            <option value="Other">Other</option>
-            <option value="Delivery">Delivery</option>
-            <option value="ECumus">ECumus</option>
+            <option value="일회용기 세척 여부 AI">일회용기 세척 여부 AI</option>
+            <option value="택배 테이프 제거 여부 AI">택배 테이프 제거 여부 AI</option>
+            <option value="사람 인식 여부 AI">사람 인식 여부 AI</option>
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="formInfraCategory">
+          <Form.Label>Infra 카테고리:</Form.Label>
+          <Form.Control
+            as="select"
+            value={infraCategory}
+            onChange={(e) => setInfraCategory(e.target.value)}
+          >
+            <option value="Case 1">Case 1</option>
+            <option value="Case 2">Case 2</option>
+            <option value="Case 3">Case 3</option>
           </Form.Control>
         </Form.Group>
 

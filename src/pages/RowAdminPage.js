@@ -77,6 +77,54 @@ const RowAdminPage = () => {
     }
   };
 
+  const handleDeleteUser = async (email) => {
+    try {
+      const token = localStorage.getItem('token');
+      const company_id = localStorage.getItem('company_id');
+
+      const response = await axios.delete(
+        `http://localhost:5000/company/user/${email}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Company-ID': company_id,
+          },
+        }
+      );
+
+      console.log('Deleted User:', response.data);
+
+      const updatedUserData = userData.filter((user) => user.email !== email);
+      setUserData(updatedUserData);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  };
+
+  const handleDeleteCoupon = async (couponId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const company_id = localStorage.getItem('company_id');
+
+      const response = await axios.delete(
+        `http://localhost:5000/company/user/coupon/${couponId}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Company-ID': company_id,
+          },
+        }
+      );
+
+      console.log('Deleted Coupon:', response.data);
+
+      const updatedCouponList = couponList.filter((coupon) => coupon.id !== couponId);
+      setCouponList(updatedCouponList);
+    } catch (error) {
+      console.error('Error deleting coupon:', error);
+    }
+  };
+
   return (
     <div className="admin-container">
       <div className="admin-header">
@@ -94,6 +142,7 @@ const RowAdminPage = () => {
               <th>Email</th>
               <th>Name</th>
               <th>Phone</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -102,6 +151,9 @@ const RowAdminPage = () => {
                 <td>{user.email}</td>
                 <td>{user.name}</td>
                 <td>{user.phone}</td>
+                <td>
+                  <button onClick={() => handleDeleteUser(user.email)}>Delete</button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -148,6 +200,7 @@ const RowAdminPage = () => {
           {couponList.map((coupon) => (
             <li key={coupon.id}>
               {coupon.name} - {coupon.usepoint} - {coupon.category}
+              <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
             </li>
           ))}
         </ul>
