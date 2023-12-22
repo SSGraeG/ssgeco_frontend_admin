@@ -9,11 +9,9 @@ const RowAdminPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // localStorage에서 토큰 가져오기
+        // localStorage에서 토큰과 company_id 가져오기
         const token = localStorage.getItem('token');
-  
-        // company_id를 사용하여 스키마 이름 생성
-        const schemaName = `company_${company_id}`;
+        const company_id = localStorage.getItem('company_id');
   
         // 요청 시 헤더에 company_id 설정
         const response = await axios.get(`http://localhost:5000/rowadmin`, {
@@ -26,17 +24,7 @@ const RowAdminPage = () => {
         // 데이터 처리
         setUserData(response.data.users);
   
-        // 기존의 요청에서 스키마를 변경하여 user 데이터 가져오기
-        const userDataResponse = await axios.get(`http://localhost:5000/${schemaName}/user`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        console.log('User Data:', userDataResponse.data);
-  
-        // userDataResponse.data를 사용하여 원하는 방식으로 상태 업데이트
-        // ...
-  
+        // ... (이전 코드)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -44,7 +32,6 @@ const RowAdminPage = () => {
   
     fetchData();
   }, [company_id]);
-
   return (
     <div>
       <h1>Admin Page</h1>
