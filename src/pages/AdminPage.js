@@ -18,7 +18,7 @@ const AdminPage = ({ isAdmin }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/get_data');
+        const response = await axios.get('http://localhost:5000/api/get_data'); // Update API endpoint
         setData(response.data);
 
         const subCount = response.data.users.filter((user) => user.subscription_status === 'yes').length;
@@ -51,6 +51,31 @@ const AdminPage = ({ isAdmin }) => {
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab);
+  };
+
+  const handleDeleteUser = async (email) => {
+    try {
+      const token = localStorage.getItem('token');
+
+      // 서버에 사용자 삭제 요청
+      const response = await axios.delete(
+        `http://localhost:5000/editor/customer/${email}`, // Update API endpoint
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log('Deleted User:', response.data);
+
+      // 프론트엔드에서도 해당 사용자 삭제
+      const updatedData = { ...data };
+      updatedData.users = updatedData.users.filter((user) => user.email !== email);
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
   };
 
   const renderTable = () => {
@@ -97,6 +122,7 @@ const AdminPage = ({ isAdmin }) => {
             <th onClick={() => handleSort('end_date')}>만료일</th>
             <th onClick={() => handleSort('category')}>산업별 카테고리</th>
             <th onClick={() => handleSort('subscription_status')}>구독여부</th>
+            <th>Action</th> {/* 삭제 버튼이 추가된 열 */}
           </tr>
         </thead>
         <tbody>
@@ -109,6 +135,9 @@ const AdminPage = ({ isAdmin }) => {
               <td>{user.end_date}</td>
               <td>{user.category}</td>
               <td>{user.subscription_status === 'yes' ? '구독 중' : '구독 안 함'}</td>
+              <td>
+                <button onClick={() => handleDeleteUser(user.email)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

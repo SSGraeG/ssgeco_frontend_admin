@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import HomePage from './pages/HomePage';
 import RowAdminPage from './pages/RowAdminPage';  // 새로운 페이지를 추가
+import './css/App.css'
 
 const App = () => {
   return (

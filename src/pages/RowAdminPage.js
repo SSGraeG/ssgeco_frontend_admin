@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import './RowAdminPage.css'; // Import a CSS file for styling (create a new CSS file)
+import '../css/RowAdminPage.css'; // Import a CSS file for styling (create a new CSS file)
 
 const RowAdminPage = () => {
   const [userData, setUserData] = useState([]);
