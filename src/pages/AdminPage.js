@@ -36,7 +36,9 @@ const AdminPage = ({ isAdmin }) => {
     };
 
     fetchData();
-  }, []); // useEffect 두 번째 인자에 빈 배열을 전달하여 컴포넌트 마운트 시에만 실행되도록 설정
+  }, []);
+
+  const userRole = localStorage.getItem('role');
 
   const handleSort = (field) => {
     if (sortBy === field) {
@@ -52,9 +54,9 @@ const AdminPage = ({ isAdmin }) => {
   };
 
   const renderTable = () => {
-    // if (!isAdmin) {
-    //   return <p className="mt-4">You don't have permission to access this page.</p>;
-    // }
+    if (!isAdmin && userRole !== '1') {
+      return <p className="mt-4">You don't have permission to access this page.</p>;
+    }
 
     if (!data || !data.users) {
       return <p className="mt-4">No data available</p>;
@@ -116,30 +118,35 @@ const AdminPage = ({ isAdmin }) => {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">Your Admin Application</h2>
-      <div className="mb-4">
-        <button className={`btn ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('all')}>전체</button>
-        <button className={`btn ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
-        <button className={`btn ${selectedTab === 'notSubscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('notSubscribed')}>구독 안 함</button>
-        <button className="btn btn-info mr-2" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
-        <button className="btn btn-info mr-2" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
-      </div>
+      {isAdmin || userRole === '1' ? (
+        <>
+          <h2 className="mb-4">Your Admin Application</h2>
+          <div className="mb-4">
+            <button className={`btn ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('all')}>전체</button>
+            <button className={`btn ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
+            <button className={`btn ${selectedTab === 'notSubscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('notSubscribed')}>구독 안 함</button>
+            <button className="btn btn-info mr-2" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
+            <button className="btn btn-info mr-2" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
+          </div>
 
-      {renderTable()}
-      <div className="mt-4 d-flex justify-content-between">
-        <div>
-          <h4>구독자 비율 차트</h4>
-          <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
-        </div>
-        <div>
-          <h4>카테고리별 비율 차트</h4>
-          <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
-        </div>
-      </div>
-      <div>
-        {/* 홈으로 이동하는 Link 버튼 추가 */}
-        <Link to="/" className="btn btn-primary mr-2">홈으로 이동</Link>
-      </div>
+          {renderTable()}
+          <div className="mt-4 d-flex justify-content-between">
+            <div>
+              <h4>구독자 비율 차트</h4>
+              <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
+            </div>
+            <div>
+              <h4>카테고리별 비율 차트</h4>
+              <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
+            </div>
+          </div>
+          <div>
+            <Link to="/" className="btn btn-primary mr-2">홈으로 이동</Link>
+          </div>
+        </>
+      ) : (
+        <p className="mt-4">You don't have permission to access this page.</p>
+      )}
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // useHistory 대신 useNavigate 사용
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [companyId, setCompanyId] = useState(null); // 새로운 state 추가
-  const navigate = useNavigate(); // useHistory 대신 useNavigate 사용
+  const [companyId, setCompanyId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -19,8 +19,16 @@ const Home = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('company_id');
     setIsLoggedIn(false);
-    setCompanyId(null); // 로그아웃 시 company_id를 null로 설정
+    setCompanyId(null);
     navigate('/');
+  };
+
+  const handleAdminButtonClick = () => {
+    if (companyId === '1') {
+      navigate('/admin');
+    } else {
+      navigate('/rowadmin');
+    }
   };
 
   return (
@@ -28,7 +36,7 @@ const Home = () => {
       <h1>관리자 페이지 3조 {companyId && `company_id: ${companyId}`}</h1>
       <img src="/static/homeimg.jpg" alt="Welcome" className="img-fluid rounded my-3" />
 
-      <p>관리자 페이지 입니다.</p>
+      <p>관리자 페이지입니다.</p>
       <nav>
         <ul className="list-inline">
           {isLoggedIn ? (
@@ -52,9 +60,9 @@ const Home = () => {
             </>
           )}
           <li className="list-inline-item">
-            <Link to="/rowadmin" className="btn btn-warning">
+            <button className="btn btn-warning" onClick={handleAdminButtonClick}>
               Admin
-            </Link>
+            </button>
           </li>
         </ul>
       </nav>
