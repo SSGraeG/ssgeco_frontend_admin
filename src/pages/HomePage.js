@@ -1,18 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [companyId, setCompanyId] = useState(null);
+  const [companyName, setCompanyName] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const storedCompanyId = localStorage.getItem('company_id');
-
-    setIsLoggedIn(!!token);
-    setCompanyId(storedCompanyId);
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const storedCompanyId = localStorage.getItem('company_id');
+  
+        setIsLoggedIn(!!token);
+        setCompanyId(storedCompanyId);
+  
+        if (token && storedCompanyId) {
+          // 여기에서 axios로 서버에 company_name을 가져오는 API를 호출합니다.
+          const response = await axios.get(`http://localhost:5000/api/getCompanyName/${storedCompanyId}`);
+  
+          // Debugging: Log the response data to the console
+          console.log('Response Data:', response.data);
+  
+          // 가져온 데이터에서 company_name을 추출하여 state에 설정합니다.
+          setCompanyName(response.data.company_name);
+        }
+      } catch (error) {
+        // Debugging: Log any errors to the console
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
   }, []);
 
   const handleLogout = () => {
@@ -33,18 +55,25 @@ const Home = () => {
 
   return (
     <div className="container mt-5">
-      <h1>관리자 페이지 3조 {companyId && `company_id: ${companyId}`}</h1>
+      <h1>관리자 페이지 3조 <br></br> {companyName && `"${companyName}"의 관리자 계정입니다. `}</h1>
       <img src="/static/homeimg.jpg" alt="Welcome" className="img-fluid rounded my-3" />
 
       <p>관리자 페이지입니다.</p>
       <nav>
         <ul className="list-inline">
           {isLoggedIn ? (
-            <li className="list-inline-item">
-              <button className="btn btn-danger" onClick={handleLogout}>
-                로그아웃
-              </button>
-            </li>
+            <>
+              <li className="list-inline-item">
+                <button className="btn btn-danger" onClick={handleLogout}>
+                  로그아웃
+                </button>
+              </li>
+              <li className="list-inline-item">
+                <button className="btn btn-warning" onClick={handleAdminButtonClick}>
+                  Admin
+                </button>
+              </li>
+            </>
           ) : (
             <>
               <li className="list-inline-item">
@@ -59,11 +88,6 @@ const Home = () => {
               </li>
             </>
           )}
-          <li className="list-inline-item">
-            <button className="btn btn-warning" onClick={handleAdminButtonClick}>
-              Admin
-            </button>
-          </li>
         </ul>
       </nav>
     </div>
