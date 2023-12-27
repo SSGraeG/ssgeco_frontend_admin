@@ -3,6 +3,10 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
+
+import AiChart from '../chart/AiChart';
+import InfraChart from '../chart/InfraChart';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 const AdminPage = ({ isAdmin }) => {
@@ -15,6 +19,8 @@ const AdminPage = ({ isAdmin }) => {
   const [DonutChartData, setDonutChartData] = useState({ win: 0, defeat: 0 });
   const [PChartData, setPChartData] = useState({ Delivery: 0, ECumus: 0, Other: 0 });
 
+  const [AiChartData, setAiChartData] = useState({ a1: 0, a2: 0, a3: 0 });
+  const [InfraChartData, setInfraChartData] = useState({ i1: 0, i2: 0, i3: 0 });
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,8 +34,18 @@ const AdminPage = ({ isAdmin }) => {
         const c2Count = response.data.users.filter((user) => user.category === 'ECumus').length;
         const c3Count = response.data.users.filter((user) => user.category === 'Other').length;
 
+        const i1 = response.data.users.filter((user) => user.infraCategory === 'Case1').length;
+        const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
+        const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
+
+        const a1 = response.data.users.filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
+        const a2 = response.data.users.filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
+        const a3 = response.data.users.filter((user) => user.aiCategory === '사람 인식 여부 AI').length;
+
         setDonutChartData({ win: subCount, defeat: noSubCount });
         setPChartData({ Delivery: c1Count, ECumus: c2Count, Other: c3Count });
+        setAiChartData({a1: a1, a2: a2, a3: a3 })
+        setInfraChartData({Case1: i1, Case2: i2, Case3: i3 })
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -117,12 +133,14 @@ const AdminPage = ({ isAdmin }) => {
           <tr>
             <th onClick={() => handleSort('company_name')}>사용자명</th>
             <th onClick={() => handleSort('usersnum')}>유저 수</th>
+            <th onClick={() => handleSort('aiCategory')}>AI 적용</th>
+            <th onClick={() => handleSort('infraCategory')}>인프라 선택</th>
             <th onClick={() => handleSort('email')}>이메일</th>
             <th onClick={() => handleSort('phone')}>연락처</th>
             <th onClick={() => handleSort('end_date')}>만료일</th>
             <th onClick={() => handleSort('category')}>산업별 카테고리</th>
             <th onClick={() => handleSort('subscription_status')}>구독여부</th>
-            <th>Action</th> {/* 삭제 버튼이 추가된 열 */}
+            <th>해지</th> {/* 삭제 버튼이 추가된 열 */}
           </tr>
         </thead>
         <tbody>
@@ -130,6 +148,8 @@ const AdminPage = ({ isAdmin }) => {
             <tr key={index}>
               <td>{user.company_name}</td>
               <td>{user.usersnum}</td>
+              <td>{user.aiCategory}</td>
+              <td>{user.infraCategory}</td>
               <td>{user.email}</td>
               <td>{user.phone}</td>
               <td>{user.end_date}</td>
@@ -159,16 +179,30 @@ const AdminPage = ({ isAdmin }) => {
           </div>
 
           {renderTable()}
-          <div className="mt-4 d-flex justify-content-between">
-            <div>
-              <h4>구독자 비율 차트</h4>
-              <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
-            </div>
-            <div>
-              <h4>카테고리별 비율 차트</h4>
-              <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
-            </div>
-          </div>
+          <div className="mt-4">
+  <div className="d-flex justify-content-between">
+    <div>
+      <h4>구독자 비율 차트</h4>
+      <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
+    </div>
+    <div>
+      <h4>카테고리별 비율 차트</h4>
+      <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
+    </div>  
+  </div>
+
+  <div className="d-flex justify-content-between mt-4">
+    <div>
+      <h4>AI 구독 비율 차트</h4>
+      <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
+    </div>
+    <div>
+      <h4>인프라 선택 비율 차트</h4>
+      <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
+    </div>  
+  </div>
+</div>
+
           <div>
             <Link to="/" className="btn btn-primary mr-2">홈으로 이동</Link>
           </div>
