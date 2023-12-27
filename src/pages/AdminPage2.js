@@ -3,55 +3,44 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
+
 import AiChart from '../chart/AiChart';
 import InfraChart from '../chart/InfraChart';
+
 import { Link, useNavigate } from 'react-router-dom';
 
-const AdminPage = ({ isAdmin }) => {
+const AdminPage2 = ({ isAdmin }) => {
   const navigate = useNavigate();
 
   const [data, setData] = useState(null);
-  const [companyUserCounts, setCompanyUserCounts] = useState({}); // 추가된 부분
-
   const [selectedTab, setSelectedTab] = useState('all');
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
   const [DonutChartData, setDonutChartData] = useState({ win: 0, defeat: 0 });
   const [PChartData, setPChartData] = useState({ Delivery: 0, ECumus: 0, Other: 0 });
+
   const [AiChartData, setAiChartData] = useState({ a1: 0, a2: 0, a3: 0 });
   const [InfraChartData, setInfraChartData] = useState({ i1: 0, i2: 0, i3: 0 });
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/admin');
+        const response = await axios.get('http://localhost:5000/api/get_data'); // Update API endpoint
         setData(response.data);
 
-        // Check if response.data.user_counts is an array
-        if (response.data.user_counts && typeof response.data.user_counts === 'object') {
-          const userCounts = {};
-          Object.keys(response.data.user_counts).forEach((companyId) => {
-            userCounts[companyId] = response.data.user_counts[companyId];
-          });
-          setCompanyUserCounts(userCounts);
-        } else {
-          console.error('Invalid user_counts data:', response.data.user_counts);
-        }
+        const subCount = response.data.users.filter((user) => user.subscription_status === 'yes').length;
+        const noSubCount = response.data.users.filter((user) => user.subscription_status === 'no').length;
 
-        const subCount = (response.data.users || []).filter((user) => user.subscription_status === 'yes').length;
-        const noSubCount = (response.data.users || []).filter((user) => user.subscription_status === 'no').length;
+        const c1Count = response.data.users.filter((user) => user.category === 'Delivery').length;
+        const c2Count = response.data.users.filter((user) => user.category === 'ECumus').length;
+        const c3Count = response.data.users.filter((user) => user.category === 'Other').length;
 
-      const c1Count = (response.data.users || []).filter((user) => user.category === 'Delivery').length;
-      const c2Count = (response.data.users || []).filter((user) => user.category === 'ECumus').length;
-      const c3Count = (response.data.users || []).filter((user) => user.category === 'Other').length;
+        const i1 = response.data.users.filter((user) => user.infraCategory === 'Case1').length;
+        const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
+        const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
 
-      const i1 = (response.data.users || []).filter((user) => user.infraCategory === 'Case1').length;
-      const i2 = (response.data.users || []).filter((user) => user.infraCategory === 'Case2').length;
-      const i3 = (response.data.users || []).filter((user) => user.infraCategory === 'Case3').length;
-
-      const a1 = (response.data.users || []).filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
-      const a2 = (response.data.users || []).filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
-      const a3 = (response.data.users || []).filter((user) => user.aiCategory === '사람 인식 여부 AI').length;
+        const a1 = response.data.users.filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
+        const a2 = response.data.users.filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
+        const a3 = response.data.users.filter((user) => user.aiCategory === '사람 인식 여부 AI').length;
 
         setDonutChartData({ win: subCount, defeat: noSubCount });
         setPChartData({ Delivery: c1Count, ECumus: c2Count, Other: c3Count });
@@ -61,6 +50,7 @@ const AdminPage = ({ isAdmin }) => {
         console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -85,7 +75,7 @@ const AdminPage = ({ isAdmin }) => {
 
       // 서버에 사용자 삭제 요청
       const response = await axios.delete(
-        `http://localhost:5000/editor/customer/${email}`,
+        `http://localhost:5000/editor/customer/${email}`, // Update API endpoint
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -157,7 +147,7 @@ const AdminPage = ({ isAdmin }) => {
           {filteredData.map((user, index) => (
             <tr key={index}>
               <td>{user.company_name}</td>
-              <td>{companyUserCounts[user.company_id]}</td>  {/* 업데이트된 부분 */}
+              <td>{user.usersnum}</td>
               <td>{user.aiCategory}</td>
               <td>{user.infraCategory}</td>
               <td>{user.email}</td>
@@ -180,12 +170,6 @@ const AdminPage = ({ isAdmin }) => {
       {isAdmin || userRole === '1' ? (
         <>
           <h2 className="mb-4">최종 관리자 대시보드</h2>
-          {/* 기업별 유저 수를 출력하는 부분 */}
-          {Object.keys(companyUserCounts).map((companyId) => (
-            <p key={companyId}>
-              {`기업 ${companyId}의 유저 테이블 레코드 수: ${companyUserCounts[companyId]}`}
-            </p>
-          ))}
           <div className="mb-4">
             <button className={`btn ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('all')}>전체</button>
             <button className={`btn ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
@@ -195,26 +179,30 @@ const AdminPage = ({ isAdmin }) => {
           </div>
 
           {renderTable()}
-          <div className="mt-4 d-flex justify-content-between">
-            <div>
-              <h4>구독자 비율 차트</h4>
-              <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
-            </div>
-            <div>
-              <h4>카테고리별 비율 차트</h4>
-              <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
-            </div>  
-          </div>
-          <div className="mt-4 d-flex justify-content-between">
-            <div>
-              <h4>AI 구독 비율 차트</h4>
-                <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
-            </div>
-            <div>
-              <h4>인프라 선택 비율 차트</h4>
-                <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3}/>
-            </div>  
-          </div>
+          <div className="mt-4">
+  <div className="d-flex justify-content-between">
+    <div>
+      <h4>구독자 비율 차트</h4>
+      <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
+    </div>
+    <div>
+      <h4>카테고리별 비율 차트</h4>
+      <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
+    </div>  
+  </div>
+
+  <div className="d-flex justify-content-between mt-4">
+    <div>
+      <h4>AI 구독 비율 차트</h4>
+      <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
+    </div>
+    <div>
+      <h4>인프라 선택 비율 차트</h4>
+      <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
+    </div>  
+  </div>
+</div>
+
           <div>
             <Link to="/" className="btn btn-primary mr-2">홈으로 이동</Link>
           </div>
@@ -226,4 +214,4 @@ const AdminPage = ({ isAdmin }) => {
   );
 };
 
-export default AdminPage;
+export default AdminPage2;
