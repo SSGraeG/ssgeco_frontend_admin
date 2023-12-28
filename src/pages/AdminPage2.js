@@ -145,7 +145,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
           {filteredData.map((user, index) => (
             <tr key={index}>
               <td>{user.company_name}</td>
-              <td>{user.usersnum}</td>
+              <td>{companyUserCounts[user.company_id]}</td>
               <td>{user.aiCategory}</td>
               <td>{user.infraCategory}</td>
               <td>{user.email}</td>
@@ -167,12 +167,12 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
     <div className="container mt-4">
       {isAdmin || userRole === '1' ? (
         <>
-          {/* 기업별 유저 수를 출력하는 부분 */}
-          {Object.keys(companyUserCounts).map((companyId) => (
-            <p key={companyId}>
-              {`기업 ${companyId}의 유저 테이블 레코드 수: ${companyUserCounts[companyId]}`}
-            </p>
-          ))}
+            {/* 기업별 유저 수를 출력하는 부분
+            {Object.keys(companyUserCounts).map((companyId) => (
+              <p key={companyId}>
+                {`기업 ${companyId}의 유저 테이블 레코드 수: ${companyUserCounts[companyId]}`}
+              </p>
+            ))} */}
 
           <h2 className="mb-4">최종 관리자 대시보드</h2>
 
