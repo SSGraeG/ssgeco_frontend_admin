@@ -5,8 +5,7 @@ import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
 import AiChart from '../chart/AiChart';
 import InfraChart from '../chart/InfraChart';
-import { Link } from 'react-router-dom';
-import AdminPage from './AdminPage';  // Import AdminPage2 component
+
 
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   const [data, setData] = useState(null);
@@ -187,33 +186,32 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
 
           {renderTable()}
 
-          <div className="mt-4">
-            <div className="d-flex justify-content-between">
-              <div>
-                <h4>구독자 비율 차트</h4>
-                <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
-              </div>
-              <div>
-                <h4>카테고리별 비율 차트</h4>
-                <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
-              </div>
-            </div>
-
-            <div className="d-flex justify-content-between mt-4">
-              <div>
-                <h4>AI 구독 비율 차트</h4>
-                <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
-              </div>
-              <div>
-                <h4>인프라 선택 비율 차트</h4>
-                <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Link to="/" className="btn btn-primary mr-2">홈으로 이동</Link>
-          </div>
+          <div className="row mt-4">
+  <div className="col-md-3">
+    <div className="mb-4">
+      <h4 className="text-center">구독자 비율 차트</h4>
+      <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
+    </div>
+  </div>
+  <div className="col-md-3">
+    <div className="mb-4">
+      <h4 className="text-center">카테고리별 비율 차트</h4>
+      <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
+    </div>
+  </div>
+  <div className="col-md-3">
+    <div className="mb-4">
+      <h4 className="text-center">AI 구독 비율 차트</h4>
+      <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
+    </div>
+  </div>
+  <div className="col-md-3">
+    <div className="mb-4">
+      <h4 className="text-center">인프라 선택 비율 차트</h4>
+      <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
+    </div>
+  </div>
+</div>
         </>
       ) : (
         <p className="mt-4">You don't have permission to access this page.</p>
