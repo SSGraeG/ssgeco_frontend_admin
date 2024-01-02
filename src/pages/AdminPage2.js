@@ -117,7 +117,7 @@ const AdminPage2 = ({ isAdmin, companyUserCounts }) => {
 
     return (
       <table className="table mt-4 table-striped table-bordered">
-        <thead className="thead-dark">
+        <thead style={{ background: 'skyblue', color: 'white' }}>
           <tr>
             <th onClick={() => handleSort('company_name')}>사용자명</th>
             <th onClick={() => handleSort('usersnum')}>유저 수</th>
@@ -166,15 +166,18 @@ const AdminPage2 = ({ isAdmin, companyUserCounts }) => {
               </p>
             ))} */}
 
-          <h2 className="mb-4">최종 관리자 대시보드</h2>
+          <h2 style={{ color: 'skyblue', fontWeight: 'bold' }}>최종 관리자 대시보드</h2>
 
           <div className="mb-4">
-            <button className={`btn ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('all')}>전체</button>
-            <button className={`btn ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
-            <button className={`btn ${selectedTab === 'notSubscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('notSubscribed')}>구독 안 함</button>
-            <button className="btn btn-info mr-2" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
-            <button className="btn btn-info mr-2" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
+            <button className={`btn btn-info text-white mr-2 ${selectedTab === 'all' ? 'active' : ''}`} onClick={() => handleTabClick('all')}>전체</button>
+            <button className={`btn btn-info text-white mr-2 ${selectedTab === 'subscribed' ? 'active' : ''}`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
+            <button className={`btn btn-info text-white mr-2 ${selectedTab === 'notSubscribed' ? 'active' : ''}`} onClick={() => handleTabClick('notSubscribed')}>구독 안 함</button>
+            <button className="btn btn-info text-white mr-2" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
+            <button className="btn btn-info text-white mr-2" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
           </div>
+
+
+
 
           {renderTable()}
 

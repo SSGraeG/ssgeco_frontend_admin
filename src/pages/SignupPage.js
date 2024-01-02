@@ -9,6 +9,7 @@ const SignupPage = () => {
   const [userPwd, setUserPwd] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [category, setCategory] = useState('Other');
   const [aiCategory, setAICategory] = useState('일회용기 세척 여부 AI');
   const [infraCategory, setInfraCategory] = useState('Case 1');
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -28,6 +29,7 @@ const SignupPage = () => {
           name: username,
           phone: contactNumber,
           start_date: startDate,
+          category: category,
           aiCategory: aiCategory,
           infraCategory: infraCategory,
           isSubscribed: isSubscribed,
@@ -77,7 +79,7 @@ const SignupPage = () => {
 
         <Form.Group controlId="formAICategory">
           <Form.Label>산업별 카테고리:</Form.Label>
-          <Form.Control as="select" value={aiCategory} onChange={(e) => setAICategory(e.target.value)}>
+          <Form.Control as="select" value={category} onChange={(e) => setCategory(e.target.value)}>
             <option value="ECumus">ECumus</option>
             <option value="Delivery">Delivery</option>
             <option value="Other">Other</option>

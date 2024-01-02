@@ -63,36 +63,36 @@ const Home = () => {
        SaaS 관리자 페이지 입니다 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
       </h1>
       <nav>
-        <ul className="list-inline">
-          {isLoggedIn ? (
-            <>
-              <li className="list-inline-item">
-                <button className="btn btn-danger" onClick={handleLogout}>
-                  로그아웃
-                </button>
-              </li>
-              <li className="list-inline-item">
-                <button className="btn btn-warning" onClick={handleAdminButtonClick}>
-                  Admin
-                </button>
-              </li>
-            </>
-          ) : (
-            <>
-              <li className="list-inline-item">
-                <Link to="/login" className="btn btn-primary">
-                  로그인
-                </Link>
-              </li>
-              <li className="list-inline-item">
-                <Link to="/signup" className="btn btn-success">
-                  회원가입
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </nav>
+  <ul className="list-inline">
+    {isLoggedIn ? (
+      <>
+        <li className="list-inline-item">
+          <button className="btn btn-danger" onClick={handleLogout}>
+            로그아웃
+          </button>
+        </li>
+        <li className="list-inline-item ml-3"> {/* 여기서 ml-3 클래스를 추가 */}
+          <button className="btn btn-warning" onClick={handleAdminButtonClick}>
+            Admin
+          </button>
+        </li>
+      </>
+    ) : (
+      <>
+        <li className="list-inline-item">
+          <Link to="/login" className="btn btn-primary">
+            로그인
+          </Link>
+        </li>
+        <li className="list-inline-item ml-3"> {/* 여기서 ml-3 클래스를 추가 */}
+          <Link to="/signup" className="btn btn-success">
+            회원가입
+          </Link>
+        </li>
+      </>
+    )}
+  </ul>
+</nav>
     </div>
   );
 };

@@ -69,7 +69,7 @@ const AdminPage = ({ isAdmin }) => {
       {isAdmin || userRole === '1' ? (
         <>
           <AdminPage2 isAdmin={isAdmin} companyUserCounts={companyUserCounts} />
-          <div className="mt-4" style={{ backgroundColor: '#c7ecc7', padding: '15px', borderRadius: '8px' }}>
+          <div className="mt-4" style={{ padding: '15px', borderRadius: '8px' }}>
             <h4>기업별 유저 테이블 레코드 수</h4>
             <Bar
               data={{
@@ -102,7 +102,7 @@ const AdminPage = ({ isAdmin }) => {
               }}
             />
           </div>
-          <Link to="/" className="btn btn-primary" style={{ position: 'absolute', top: '10px', right: '10px' }} onClick={destroyChart}>
+          <Link to="/" className="btn btn-primary" style={{ position: 'absolute', top: '30px', right: '120px' }} onClick={destroyChart}>
             홈으로 이동
           </Link>
         </>
