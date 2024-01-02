@@ -1,22 +1,23 @@
-// PieChart.jsx
 import React from "react";
 import DonutChart from "react-donut-chart";
 
-const PieChart = ({ Delivery, ECumus, Other }) => {
+const InfraChart = ({ Case1, Case2, Case3 }) => {
+  console.log("InfraChart Data:", Case1, Case2, Case3);
+
   return (
     <DonutChart
       data={[
         {
-          label: "Other",
-          value: Other,
+          label: "Case1",
+          value: Case1,
         },
         {
-          label: "ECumus",
-          value: ECumus,
+          label: "Case2",
+          value: Case2,
         },
         {
-          label: "Delivery",
-          value: Delivery,
+          label: "Case3",
+          value: Case3,
         },
       ]}
       style={{ fontSize: "9px" }}
@@ -30,4 +31,4 @@ const PieChart = ({ Delivery, ECumus, Other }) => {
   );
 };
 
-export default PieChart;
+export default InfraChart;

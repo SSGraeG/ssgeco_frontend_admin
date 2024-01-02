@@ -9,6 +9,7 @@ const SignupPage = () => {
   const [userPwd, setUserPwd] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [category, setCategory] = useState('Other');
   const [aiCategory, setAICategory] = useState('일회용기 세척 여부 AI');
   const [infraCategory, setInfraCategory] = useState('Case 1');
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -28,6 +29,7 @@ const SignupPage = () => {
           name: username,
           phone: contactNumber,
           start_date: startDate,
+          category: category,
           aiCategory: aiCategory,
           infraCategory: infraCategory,
           isSubscribed: isSubscribed,
@@ -35,9 +37,6 @@ const SignupPage = () => {
 
         const token = response.data.token;
         alert('회원가입이 완료되었습니다.');
-
-        // 토큰을 사용하는 로직을 추가할 수 있습니다.
-        // 예: 로컬 스토리지에 토큰을 저장하거나, 상태로 관리할 수 있습니다.
 
         navigate('/');
       } else {
@@ -50,7 +49,7 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px' }}>
       <h2>회원가입</h2>
       <Form>
         <Form.Group controlId="formUsername">
@@ -79,12 +78,17 @@ const SignupPage = () => {
         </Form.Group>
 
         <Form.Group controlId="formAICategory">
+          <Form.Label>산업별 카테고리:</Form.Label>
+          <Form.Control as="select" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="ECumus">ECumus</option>
+            <option value="Delivery">Delivery</option>
+            <option value="Other">Other</option>
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="formAICategory">
           <Form.Label>AI 카테고리:</Form.Label>
-          <Form.Control
-            as="select"
-            value={aiCategory}
-            onChange={(e) => setAICategory(e.target.value)}
-          >
+          <Form.Control as="select" value={aiCategory} onChange={(e) => setAICategory(e.target.value)}>
             <option value="일회용기 세척 여부 AI">일회용기 세척 여부 AI</option>
             <option value="택배 테이프 제거 여부 AI">택배 테이프 제거 여부 AI</option>
             <option value="사람 인식 여부 AI">사람 인식 여부 AI</option>
@@ -93,11 +97,7 @@ const SignupPage = () => {
 
         <Form.Group controlId="formInfraCategory">
           <Form.Label>Infra 카테고리:</Form.Label>
-          <Form.Control
-            as="select"
-            value={infraCategory}
-            onChange={(e) => setInfraCategory(e.target.value)}
-          >
+          <Form.Control as="select" value={infraCategory} onChange={(e) => setInfraCategory(e.target.value)}>
             <option value="Case 1">Case 1</option>
             <option value="Case 2">Case 2</option>
             <option value="Case 3">Case 3</option>
