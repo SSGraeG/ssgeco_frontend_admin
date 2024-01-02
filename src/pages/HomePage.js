@@ -22,7 +22,7 @@ const Home = () => {
         setRole(storedRole);
   
         if (token && storedCompanyId) {
-          const response = await axios.get(`http://localhost:5000/api/getCompanyName/${storedCompanyId}`);
+          const response = await axios.get(`https://localhost:5000/api/getCompanyName/${storedCompanyId}`);
           setCompanyName(response.data.company_name);
         }
       } catch (error) {
@@ -32,7 +32,7 @@ const Home = () => {
   
     fetchData();
   }, []);
-  
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('company_id');
