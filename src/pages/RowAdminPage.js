@@ -9,7 +9,7 @@ const RowAdminPage = () => {
   const [usepoint, setUsepoint] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [couponList, setCouponList] = useState([]);
-  const [categoryList, setCategoryList] = useState([
+  const [categoryList] = useState([
     { id: 1, name: 'Donation', category: 'Donation' },
     { id: 2, name: 'Coupon', category: 'Coupon' },
   ]);
