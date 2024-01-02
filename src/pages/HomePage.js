@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [companyId, setCompanyId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);  // 이 변수가 사용되지 않는다는 경고가 있습니다.
   const [companyName, setCompanyName] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ const Home = () => {
   
     fetchData();
   }, []);
+  
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('company_id');
