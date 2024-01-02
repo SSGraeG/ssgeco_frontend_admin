@@ -1,10 +1,11 @@
 import React from "react";
 import DonutChart from "react-donut-chart";
 
-const Infrachart = ({ Case1, Case2, Case3 }) => {
+const InfraChart = ({ Case1, Case2, Case3 }) => {
+  console.log("InfraChart Data:", Case1, Case2, Case3);
+
   return (
     <DonutChart
-    
       data={[
         {
           label: "Case1",
@@ -19,15 +20,15 @@ const Infrachart = ({ Case1, Case2, Case3 }) => {
           value: Case3,
         },
       ]}
-      style={{ fontSize: "9px" }} // 원하는 크기로 조절
+      style={{ fontSize: "9px" }}
       colors={["#f76b8a", "#13D8F6", "#9c7dcb"]}
       interactive={false}
       width={300}
-      height={300} // 원하는 크기로 조절
+      height={300}
       legend={true}
       strokeColor={"none"}
     />
   );
 };
 
-export default Infrachart;
+export default InfraChart;

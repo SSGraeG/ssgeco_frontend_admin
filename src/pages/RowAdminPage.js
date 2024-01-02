@@ -126,23 +126,25 @@ const RowAdminPage = () => {
   };
 
   return (
-    <div className="admin-container">
+    <div className="admin-container" style={{ backgroundColor: 'beige' }}>
       <div className="admin-header">
-        <h1>Admin Page</h1>
+      <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+       관리자 페이지<br /> 
+      </h1>
         <Link to="/" className="home-link">
           <button className="home-button">Home</button>
         </Link>
       </div>
 
       <div className="admin-section">
-        <h2>User Data for Company {company_id}</h2>
+        <h2>유저 정보 {company_id}</h2>
         <table className="user-table">
           <thead>
             <tr>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Action</th>
+              <th>이메일</th>
+              <th>이름</th>
+              <th>휴대전화</th>
+              <th>유저 삭제</th>
             </tr>
           </thead>
           <tbody>
@@ -161,28 +163,28 @@ const RowAdminPage = () => {
       </div>
 
       <div className="admin-section">
-        <h2>Create Coupon</h2>
+        <h2>쿠폰 생성</h2>
         <div className="coupon-form">
-          <label>Coupon Name:</label>
+          <label>쿠폰 이름:</label>
           <input
             type="text"
             value={couponName}
             onChange={(e) => setCouponName(e.target.value)}
           />
 
-          <label>Usepoint:</label>
+          <label>포인트 가격:</label>
           <input
             type="number"
             value={usepoint}
             onChange={(e) => setUsepoint(e.target.value)}
           />
 
-          <label>Category:</label>
+          <label>카테고리:</label>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
-            <option value="">Select a category</option>
+            <option value="">기부 & 할인 쿠폰 항목 선택</option>
             {categoryList.map((category) => (
               <option key={category.id} value={category.category}>
                 {category.name}
@@ -195,7 +197,7 @@ const RowAdminPage = () => {
       </div>
 
       <div className="admin-section">
-        <h2>Coupon List</h2>
+        <h2>현재 출시된 쿠폰 목록</h2>
         <ul className="coupon-list">
           {couponList.map((coupon) => (
             <li key={coupon.id}>

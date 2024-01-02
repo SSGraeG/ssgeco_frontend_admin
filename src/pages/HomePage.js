@@ -7,7 +7,7 @@ const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [companyId, setCompanyId] = useState(null);
   const [companyName, setCompanyName] = useState('');
-  const [role, setRole] = useState(''); // Step 1: Add role state
+  const [role, setRole] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,11 +15,11 @@ const Home = () => {
       try {
         const token = localStorage.getItem('token');
         const storedCompanyId = localStorage.getItem('company_id');
-        const storedRole = localStorage.getItem('role'); // Step 2: Fetch and set role
+        const storedRole = localStorage.getItem('role');
 
         setIsLoggedIn(!!token);
         setCompanyId(storedCompanyId);
-        setRole(storedRole); // Step 2: Set role
+        setRole(storedRole);
 
         if (token && storedCompanyId) {
           const response = await axios.get(`http://localhost:5000/api/getCompanyName/${storedCompanyId}`);
@@ -36,16 +36,16 @@ const Home = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('company_id');
-    localStorage.removeItem('role'); // Step 3: Remove role
+    localStorage.removeItem('role');
     setIsLoggedIn(false);
     setCompanyId(null);
-    setRole(''); // Step 3: Set role to empty string
+    setRole('');
     navigate('/');
     window.location.reload();
   };
 
   const handleAdminButtonClick = () => {
-    if (role === 'admin') {
+    if (role === '1') {
       navigate('/admin');
     } else {
       navigate('/rowadmin');
@@ -53,11 +53,15 @@ const Home = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1>관리자 페이지 3조 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}</h1>
-      <img src="/static/homeimg.jpg" alt="Welcome" className="img-fluid rounded my-3" />
+    <div className="container mt-5 text-center" style={{ backgroundColor: '#add8e6', padding: '20px', borderRadius: '100px' }}>
+      <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+        관리자 페이지 3조 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+      </h1>
+      <img src="/static/homeimg.jpg" alt="Welcome" className="img-fluid rounded my-3" / >
 
-      <p>관리자 페이지입니다.</p>
+      <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+       SaaS 관리자 페이지 입니다 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+      </h1>
       <nav>
         <ul className="list-inline">
           {isLoggedIn ? (

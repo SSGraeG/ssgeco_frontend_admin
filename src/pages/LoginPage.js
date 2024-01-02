@@ -18,16 +18,12 @@ const LoginPage = ({ setAdminStatus }) => {
 
         const { token, company_id, role, can_access_admin } = response.data;
 
-        // 토큰과 company_id, role을 localStorage에 저장
         localStorage.setItem('token', token);
         localStorage.setItem('company_id', company_id);
         localStorage.setItem('role', role);
 
-        // 어드민 접근 여부를 전달
-        // setAdminStatus(can_access_admin);
-
         alert('로그인이 완료되었습니다.');
-        navigate('/'); // 로그인 성공 시 어드민 페이지로 이동
+        navigate('/');
       } else {
         alert('이메일과 비밀번호를 모두 입력하세요.');
       }
@@ -38,7 +34,7 @@ const LoginPage = ({ setAdminStatus }) => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px', fontFamily: 'Arial, sans-serif' }}>
       <h2>로그인</h2>
       <Form>
         <Form.Group controlId="formEmail">

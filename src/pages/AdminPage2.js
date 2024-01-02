@@ -3,50 +3,40 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
-import AiChart from '../chart/AiChart';
-import InfraChart from '../chart/InfraChart';
+// AiChart 및 InfraChart import 삭제
 
-
-const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
+const AdminPage2 = ({ isAdmin, companyUserCounts }) => {
   const [data, setData] = useState(null);
   const [selectedTab, setSelectedTab] = useState('all');
   const [sortBy, setSortBy] = useState(null);
   const [sortOrder, setSortOrder] = useState('asc');
   const [DonutChartData, setDonutChartData] = useState({ win: 0, defeat: 0 });
   const [PChartData, setPChartData] = useState({ Delivery: 0, ECumus: 0, Other: 0 });
-  const [AiChartData, setAiChartData] = useState({ a1: 0, a2: 0, a3: 0 });
-  const [InfraChartData, setInfraChartData] = useState({ Case1: 0, Case2: 0, Case3: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('Requesting data from the server...'); // 추가된 로그
         const response = await axios.get('http://localhost:5000/api/get_data');
+        console.log('Data received from the server:', response.data); // 추가된 로그
         setData(response.data);
-  
+
+        // 기존 코드에서 구독자 및 카테고리별 통계 추출
+
         const subCount = response.data.users.filter((user) => user.subscription_status === 'yes').length;
         const noSubCount = response.data.users.filter((user) => user.subscription_status === 'no').length;
-  
+
         const c1Count = response.data.users.filter((user) => user.category === 'Delivery').length;
         const c2Count = response.data.users.filter((user) => user.category === 'ECumus').length;
         const c3Count = response.data.users.filter((user) => user.category === 'Other').length;
-  
-        const i1 = response.data.users.filter((user) => user.infraCategory === 'Case1').length;
-        const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
-        const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
-  
-        const a1 = response.data.users.filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
-        const a2 = response.data.users.filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
-        const a3 = response.data.users.filter((user) => user.aiCategory === '사람 인식 여부 AI').length;
-  
+
         setDonutChartData({ win: subCount, defeat: noSubCount });
         setPChartData({ Delivery: c1Count, ECumus: c2Count, Other: c3Count });
-        setAiChartData({ a1: a1, a2: a2, a3: a3 });
-        setInfraChartData({ Case1: i1, Case2: i2, Case3: i3 });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -142,8 +132,9 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredData.map((user, index) => (
-            <tr key={index}>
+        {filteredData.map((user, index) => (
+          <React.Fragment key={index}>
+            <tr>
               <td>{user.company_name}</td>
               <td>{companyUserCounts[user.company_id]}</td>
               <td>{user.aiCategory}</td>
@@ -154,11 +145,12 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
               <td>{user.category}</td>
               <td>{user.subscription_status === 'yes' ? '구독 중' : '구독 안 함'}</td>
               <td>
-                <button onClick={() => handleDeleteUser(user.email)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+          <button onClick={() => handleDeleteUser(user.email)}>Delete</button>
+        </td>
+      </tr>
+    </React.Fragment>
+  ))}
+</tbody>
       </table>
     );
   };
@@ -187,31 +179,20 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
           {renderTable()}
 
           <div className="row mt-4">
-  <div className="col-md-3">
-    <div className="mb-4">
-      <h4 className="text-center">구독자 비율 차트</h4>
-      <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
-    </div>
-  </div>
-  <div className="col-md-3">
-    <div className="mb-4">
-      <h4 className="text-center">카테고리별 비율 차트</h4>
-      <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
-    </div>
-  </div>
-  <div className="col-md-3">
-    <div className="mb-4">
-      <h4 className="text-center">AI 구독 비율 차트</h4>
-      <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
-    </div>
-  </div>
-  <div className="col-md-3">
-    <div className="mb-4">
-      <h4 className="text-center">인프라 선택 비율 차트</h4>
-      <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
-    </div>
-  </div>
-</div>
+            <div className="col-md-3">
+              <div className="mb-4">
+                <h4 className="text-center">구독자 비율 차트</h4>
+                <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className="mb-4">
+                <h4 className="text-center">카테고리별 비율 차트</h4>
+                <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
+              </div>
+            </div>
+            {/* AiChart 및 InfraChart 부분 삭제 */}
+          </div>
         </>
       ) : (
         <p className="mt-4">You don't have permission to access this page.</p>

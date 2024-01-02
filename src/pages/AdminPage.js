@@ -17,7 +17,7 @@ const AdminPage = ({ isAdmin }) => {
         const response = await axios.get('http://localhost:5000/admin');
         setData(response.data);
 
-        if (response.data.user_counts && typeof response.data.user_counts === 'object') {
+        if (response.data && response.data.user_counts && typeof response.data.user_counts === 'object') {
           const userCounts = {};
           Object.keys(response.data.user_counts).forEach((companyId) => {
             userCounts[companyId] = response.data.user_counts[companyId];
@@ -30,7 +30,7 @@ const AdminPage = ({ isAdmin }) => {
             chart.update();
           }
         } else {
-          console.error('Invalid user_counts data:', response.data.user_counts);
+          console.error('Invalid data format:', response.data);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -65,12 +65,11 @@ const AdminPage = ({ isAdmin }) => {
   }, []);
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px' }}>
       {isAdmin || userRole === '1' ? (
         <>
           <AdminPage2 isAdmin={isAdmin} companyUserCounts={companyUserCounts} />
-          <h2 className="mb-4">최종 관리자 대시보드</h2>
-          <div className="mt-4">
+          <div className="mt-4" style={{ backgroundColor: '#c7ecc7', padding: '15px', borderRadius: '8px' }}>
             <h4>기업별 유저 테이블 레코드 수</h4>
             <Bar
               data={{
@@ -103,7 +102,7 @@ const AdminPage = ({ isAdmin }) => {
               }}
             />
           </div>
-          <Link to="/" className="btn btn-primary mr-2" onClick={destroyChart}>
+          <Link to="/" className="btn btn-primary" style={{ position: 'absolute', top: '10px', right: '10px' }} onClick={destroyChart}>
             홈으로 이동
           </Link>
         </>
