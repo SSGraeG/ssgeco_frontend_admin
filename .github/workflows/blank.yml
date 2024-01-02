@@ -8,10 +8,6 @@ env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: adminfe
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
