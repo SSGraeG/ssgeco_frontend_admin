@@ -16,11 +16,11 @@ const Home = () => {
         const token = localStorage.getItem('token');
         const storedCompanyId = localStorage.getItem('company_id');
         const storedRole = localStorage.getItem('role');
-
+  
         setIsLoggedIn(!!token);
         setCompanyId(storedCompanyId);
         setRole(storedRole);
-
+  
         if (token && storedCompanyId) {
           const response = await axios.get(`http://localhost:5000/api/getCompanyName/${storedCompanyId}`);
           setCompanyName(response.data.company_name);
@@ -29,10 +29,9 @@ const Home = () => {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []);
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('company_id');

@@ -62,7 +62,7 @@ const AdminPage = ({ isAdmin }) => {
         chart.destroy();
       }
     };
-  }, []);
+  }, [chart]);
 
   return (
     <div className="container mt-4" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px' }}>
