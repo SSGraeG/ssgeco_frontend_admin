@@ -17,7 +17,7 @@ const AdminPage2 = ({ isAdmin, companyUserCounts }) => {
     const fetchData = async () => {
       try {
         console.log('Requesting data from the server...'); // 추가된 로그
-        const response = await axios.get('https://localhost:5000/api/get_data');
+        const response = await axios.get('http://3.36.124.56:5000/api/get_data');
         console.log('Data received from the server:', response.data); // 추가된 로그
         setData(response.data);
 
@@ -61,7 +61,7 @@ const AdminPage2 = ({ isAdmin, companyUserCounts }) => {
 
       // 서버에 사용자 삭제 요청
       await axios.delete(
-        `https://localhost:5000/editor/customer/${email}`, // Update API endpoint
+        `http://3.36.124.56:5000/editor/customer/${email}`, // Update API endpoint
         {
           headers: {
             'Authorization': `Bearer ${token}`,
