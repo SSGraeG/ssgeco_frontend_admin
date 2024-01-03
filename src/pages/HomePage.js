@@ -22,7 +22,7 @@ const Home = () => {
         setRole(storedRole);
   
         if (token && storedCompanyId) {
-          const response = await axios.get(`https://localhost:5000/api/getCompanyName/${storedCompanyId}`);
+          const response = await axios.get(`http://3.36.124.56:5000/api/getCompanyName/${storedCompanyId}`);
           setCompanyName(response.data.company_name);
         }
       } catch (error) {
