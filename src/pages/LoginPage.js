@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = ({ setAdminStatus }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -11,12 +11,12 @@ const LoginPage = ({ setAdminStatus }) => {
   const handleLogin = async () => {
     try {
       if (email && password) {
-        const response = await axios.post('http://localhost:5000/login', {
+        const response = await axios.post('https://localhost:5000/login', {
           email: email,
           password: password,
         });
 
-        const { token, company_id, role, can_access_admin } = response.data;
+        const { token, company_id, role } = response.data;
 
         localStorage.setItem('token', token);
         localStorage.setItem('company_id', company_id);
