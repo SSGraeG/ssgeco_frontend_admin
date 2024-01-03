@@ -14,7 +14,7 @@ const AdminPage = ({ isAdmin }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/admin');
+        const response = await axios.get('https://localhost:5000/admin');
         setData(response.data);
 
         if (response.data && response.data.user_counts && typeof response.data.user_counts === 'object') {
@@ -62,7 +62,7 @@ const AdminPage = ({ isAdmin }) => {
         chart.destroy();
       }
     };
-  }, []);
+  }, [chart]);
 
   return (
     <div className="container mt-4" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px' }}>
