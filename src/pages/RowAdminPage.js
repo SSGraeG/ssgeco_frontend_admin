@@ -9,7 +9,7 @@ const RowAdminPage = () => {
   const [usepoint, setUsepoint] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [couponList, setCouponList] = useState([]);
-  const [categoryList, setCategoryList] = useState([
+  const [categoryList] = useState([
     { id: 1, name: 'Donation', category: 'Donation' },
     { id: 2, name: 'Coupon', category: 'Coupon' },
   ]);
@@ -22,7 +22,7 @@ const RowAdminPage = () => {
         const token = localStorage.getItem('token');
         const company_id = localStorage.getItem('company_id');
 
-        const response = await axios.get(`http://localhost:5000/rowadmin`, {
+        const response = await axios.get(`https://localhost:5000/rowadmin`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Company-ID': company_id,
@@ -31,7 +31,7 @@ const RowAdminPage = () => {
 
         setUserData(response.data.users);
 
-        const couponResponse = await axios.get(`http://localhost:5000/company/user/coupon`, {
+        const couponResponse = await axios.get(`https://localhost:5000/company/user/coupon`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Company-ID': company_id,
@@ -52,7 +52,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.post(
-        `http://localhost:5000/company/user/coupon`,
+        `https://localhost:5000/company/user/coupon`,
         {
           name: couponName,
           usepoint: usepoint,
@@ -83,7 +83,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.delete(
-        `http://localhost:5000/company/user/${email}`,
+        `https://localhost:5000/company/user/${email}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -107,7 +107,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.delete(
-        `http://localhost:5000/company/user/coupon/${couponId}`,
+        `https://localhost:5000/company/user/coupon/${couponId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
