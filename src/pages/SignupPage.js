@@ -23,7 +23,7 @@ const SignupPage = () => {
   const handleSignup = async () => {
     try {
       if (username && userId && userPwd && contactNumber && startDate) {
-        const response = await axios.post('http://localhost:5000/login/signup', {
+        await axios.post('https://localhost:5000/login/signup', {
           userId: userId,
           userPwd: userPwd,
           name: username,
@@ -34,10 +34,8 @@ const SignupPage = () => {
           infraCategory: infraCategory,
           isSubscribed: isSubscribed,
         });
-
-        const token = response.data.token;
+  
         alert('회원가입이 완료되었습니다.');
-
         navigate('/');
       } else {
         alert('모든 필드를 입력하세요');
