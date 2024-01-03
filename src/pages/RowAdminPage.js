@@ -22,7 +22,7 @@ const RowAdminPage = () => {
         const token = localStorage.getItem('token');
         const company_id = localStorage.getItem('company_id');
 
-        const response = await axios.get(`https://localhost:5000/rowadmin`, {
+        const response = await axios.get(`http://3.36.124.56:5000/rowadmin`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Company-ID': company_id,
@@ -31,7 +31,7 @@ const RowAdminPage = () => {
 
         setUserData(response.data.users);
 
-        const couponResponse = await axios.get(`https://localhost:5000/company/user/coupon`, {
+        const couponResponse = await axios.get(`http://3.36.124.56:5000/company/user/coupon`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Company-ID': company_id,
@@ -52,7 +52,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.post(
-        `https://localhost:5000/company/user/coupon`,
+        `http://3.36.124.56:5000/company/user/coupon`,
         {
           name: couponName,
           usepoint: usepoint,
@@ -83,7 +83,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.delete(
-        `https://localhost:5000/company/user/${email}`,
+        `http://3.36.124.56:5000/company/user/${email}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -107,7 +107,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.delete(
-        `https://localhost:5000/company/user/coupon/${couponId}`,
+        `http://3.36.124.56:5000/company/user/coupon/${couponId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -193,7 +193,7 @@ const RowAdminPage = () => {
           </select>
 
           <button onClick={handleCreateCoupon}>Create Coupon</button>
-        </div>
+        </div>3.36.124.56
       </div>
 
       <div className="admin-section">
