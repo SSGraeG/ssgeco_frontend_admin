@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [companyId, setCompanyId] = useState(null);
+  const [companyId, setCompanyId] = useState(null);  // 이 변수가 사용되지 않는다는 경고가 있습니다.
   const [companyName, setCompanyName] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
@@ -16,20 +16,20 @@ const Home = () => {
         const token = localStorage.getItem('token');
         const storedCompanyId = localStorage.getItem('company_id');
         const storedRole = localStorage.getItem('role');
-
+  
         setIsLoggedIn(!!token);
         setCompanyId(storedCompanyId);
         setRole(storedRole);
-
+  
         if (token && storedCompanyId) {
-          const response = await axios.get(`http://localhost:5000/api/getCompanyName/${storedCompanyId}`);
+          const response = await axios.get(`https://localhost:5000/api/getCompanyName/${storedCompanyId}`);
           setCompanyName(response.data.company_name);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
   }, []);
 
