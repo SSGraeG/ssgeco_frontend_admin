@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
 // AiChart 및 InfraChart import 삭제
-
+ 
 const AdminPage2 = ({ isAdmin, companyUserCounts }) => {
   const [data, setData] = useState(null);
   const [selectedTab, setSelectedTab] = useState('all');
