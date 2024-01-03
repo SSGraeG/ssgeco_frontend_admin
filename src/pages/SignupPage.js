@@ -23,7 +23,7 @@ const SignupPage = () => {
   const handleSignup = async () => {
     try {
       if (username && userId && userPwd && contactNumber && startDate) {
-        await axios.post('https://localhost:5000/login/signup', {
+        await axios.post('http://3.36.124.56:5000/login/signup', {
           userId: userId,
           userPwd: userPwd,
           name: username,
