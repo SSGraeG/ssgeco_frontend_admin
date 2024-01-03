@@ -3,10 +3,9 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminPage = ({ isAdmin }) => {
-  const navigate = useNavigate();
  
   const [data, setData] = useState(null);
   const [selectedTab, setSelectedTab] = useState('all');
