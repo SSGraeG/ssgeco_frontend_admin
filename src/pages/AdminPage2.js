@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
 import AiChart from '../chart/AiChart';
-import InfraChart from '../chart/InfraChart';
+// import InfraChart from '../chart/InfraChart';
 import { URL } from '../BaseURL';
 
 
@@ -16,7 +16,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   const [DonutChartData, setDonutChartData] = useState({ win: 0, defeat: 0 });
   const [PChartData, setPChartData] = useState({ Delivery: 0, ECumus: 0, Other: 0 });
   const [AiChartData, setAiChartData] = useState({ a1: 0, a2: 0, a3: 0 });
-  const [InfraChartData, setInfraChartData] = useState({ Case1: 0, Case2: 0, Case3: 0 });
+  // const [InfraChartData, setInfraChartData] = useState({ Case1: 0, Case2: 0, Case3: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,9 +31,9 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
         const c2Count = response.data.users.filter((user) => user.category === 'ECumus').length;
         const c3Count = response.data.users.filter((user) => user.category === 'Other').length;
   
-        const i1 = response.data.users.filter((user) => user.infraCategory === 'Case1').length;
-        const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
-        const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
+        // const i1 = response.data.users.filter((user) => user.infraCategory === 'Case1').length;
+        // const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
+        // const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
   
         const a1 = response.data.users.filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
         const a2 = response.data.users.filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
@@ -42,7 +42,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
         setDonutChartData({ win: subCount, defeat: noSubCount });
         setPChartData({ Delivery: c1Count, ECumus: c2Count, Other: c3Count });
         setAiChartData({ a1: a1, a2: a2, a3: a3 });
-        setInfraChartData({ Case1: i1, Case2: i2, Case3: i3 });
+        // setInfraChartData({ Case1: i1, Case2: i2, Case3: i3 });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -198,12 +198,12 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
       <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
     </div>
   </div>
-  <div className="col-md-3">
+  {/* <div className="col-md-3">
     <div className="mb-4">
       <h4 className="text-center">인프라 선택 비율 차트</h4>
       <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
     </div>
-  </div>
+  </div> */}
 </div>
 </>
       ) : (
