@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import '../css/RowAdminPage.css'; // Import a CSS file for styling (create a new CSS file)
+import { URL } from '../BaseURL';
 
 const RowAdminPage = () => {
   const [userData, setUserData] = useState([]);
@@ -22,7 +23,7 @@ const RowAdminPage = () => {
         const token = localStorage.getItem('token');
         const company_id = localStorage.getItem('company_id');
 
-        const response = await axios.get(`http://3.36.124.56:5000/rowadmin`, {
+        const response = await axios.get(`${URL}/rowadmin`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Company-ID': company_id,
@@ -31,7 +32,7 @@ const RowAdminPage = () => {
 
         setUserData(response.data.users);
 
-        const couponResponse = await axios.get(`http://3.36.124.56:5000/company/user/coupon`, {
+        const couponResponse = await axios.get(`${URL}/company/user/coupon`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Company-ID': company_id,
@@ -52,7 +53,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.post(
-        `http://3.36.124.56:5000/company/user/coupon`,
+        `${URL}/company/user/coupon`,
         {
           name: couponName,
           usepoint: usepoint,
@@ -83,7 +84,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.delete(
-        `http://3.36.124.56:5000/company/user/${email}`,
+        `${URL}/company/user/${email}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -107,7 +108,7 @@ const RowAdminPage = () => {
       const company_id = localStorage.getItem('company_id');
 
       const response = await axios.delete(
-        `http://3.36.124.56:5000/company/user/coupon/${couponId}`,
+        `${URL}/company/user/coupon/${couponId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,

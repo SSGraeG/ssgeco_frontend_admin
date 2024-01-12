@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { URL } from '../BaseURL';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +23,7 @@ const Home = () => {
         setRole(storedRole);
 
         if (token && storedCompanyId) {
-          const response = await axios.get(`http://3.36.124.56:5000/api/getCompanyName/${storedCompanyId}`);
+          const response = await axios.get(`${URL}/api/getCompanyName/${storedCompanyId}`);
           setCompanyName(response.data.company_name);
         }
       } catch (error) {

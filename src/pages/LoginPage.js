@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { URL } from '../BaseURL';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       if (email && password) {
-        const response = await axios.post('http://3.36.124.56:5000/login', {
+        const response = await axios.post(`${URL}/login`, {
           email: email,
           password: password,
         });

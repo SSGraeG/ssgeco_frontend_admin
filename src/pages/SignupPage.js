@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { URL } from '../BaseURL';
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
@@ -23,7 +24,7 @@ const SignupPage = () => {
   const handleSignup = async () => {
     try {
       if (username && userId && userPwd && contactNumber && startDate) {
-        await axios.post('http://3.36.124.56:5000/login/signup', {
+        await axios.post(`${URL}/login/signup`, {
           userId: userId,
           userPwd: userPwd,
           name: username,

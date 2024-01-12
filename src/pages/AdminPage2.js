@@ -5,7 +5,7 @@ import DonutChart from '../chart/DonutChart';
 import PChart from '../chart/PChart';
 import AiChart from '../chart/AiChart';
 import InfraChart from '../chart/InfraChart';
-
+import { URL } from '../BaseURL';
 
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   const [data, setData] = useState(null);
@@ -20,7 +20,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://3.36.124.56:5000/api/get_data');
+        const response = await axios.get(`${URL}/api/get_data`);
         setData(response.data);
   
         const subCount = response.data.users.filter((user) => user.subscription_status === 'yes').length;
@@ -71,7 +71,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
 
       // 서버에 사용자 삭제 요청
       await axios.delete(
-        `http://3.36.124.56:5000/editor/customer/${email}`, // Update API endpoint
+        `${URL}/editor/customer/${email}`, // Update API endpoint
         {
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -1,20 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import AdminPage2 from './AdminPage2';
 import { Bar } from 'react-chartjs-2';
 import { Chart } from 'chart.js/auto';
+import { URL } from '../BaseURL';
 
 const AdminPage = ({ isAdmin }) => {
   const [data, setData] = useState(null);
   const [companyUserCounts, setCompanyUserCounts] = useState({});
   const [chart, setChart] = useState(null);
 
+  const destroyChart = useCallback(() => {
+    if (chart) {
+      chart.destroy();
+    }
+  }, [chart]);
+
+  const createChart = useCallback(() => {
+    const chartElement = document.getElementById('myChart');
+
+    if (chartElement) {
+      const newChart = new Chart(chartElement, {
+        type: 'bar',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: '유저 수',
+              data: [],
+              backgroundColor: 'rgba(75,192,192,0.4)',
+              borderColor: 'rgba(75,192,192,1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            x: [
+              {
+                type: 'category',
+                title: { display: true, text: '기업' },
+              },
+            ],
+            y: [
+              {
+                title: { display: true, text: '유저 수' },
+                beginAtZero: true,
+              },
+            ],
+          },
+        },
+      });
+
+      setChart(newChart);
+    } else {
+      console.error("차트 요소를 찾을 수 없습니다");
+    }
+  }, [setChart]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://3.36.124.56:5000/admin');
+        const response = await axios.get(`${URL}/admin`);
         setData(response.data);
 
         if (response.data.user_counts && typeof response.data.user_counts === 'object') {
@@ -44,25 +93,12 @@ const AdminPage = ({ isAdmin }) => {
 
   const userRole = localStorage.getItem('role');
 
-  const destroyChart = () => {
-    if (chart) {
-      chart.destroy();
-    }
-  };
-
-  const createChart = () => {
-    const newChart = new Chart(/* 차트 옵션 설정 */);
-    setChart(newChart);
-  };
-
   useEffect(() => {
     createChart();
     return () => {
-      if (chart) {
-        chart.destroy();
-      }
+      destroyChart();
     };
-  }, [chart]);
+  }, [createChart, destroyChart]);
 
   return (
     <div className="container mt-4">
