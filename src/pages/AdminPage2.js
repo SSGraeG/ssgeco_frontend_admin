@@ -7,6 +7,7 @@ import AiChart from '../chart/AiChart';
 import InfraChart from '../chart/InfraChart';
 import { URL } from '../BaseURL';
 
+
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   const [data, setData] = useState(null);
   const [selectedTab, setSelectedTab] = useState('all');
