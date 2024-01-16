@@ -1,1 +1,1 @@
-export const URL = "http://adminBE-ALB-1161147473.ap-northeast-1.elb.amazonaws.com";
+export const URL = "http://adminBE-ALB-1161147473.ap-northeast-1.elb.amazonaws.com:5000";
