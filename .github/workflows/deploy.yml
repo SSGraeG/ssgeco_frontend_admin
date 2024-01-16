@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: ap-northeast-2
+  AWS_REGION: ap-northeast-1
   S3_BUCKET_NAME: adminfe
 
 jobs:
