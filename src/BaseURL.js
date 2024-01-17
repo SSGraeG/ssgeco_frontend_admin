@@ -1,1 +1,1 @@
-export const URL = "https://api.ssgeco.store:5000";
+export const URL = "http://api.ssgeco.store:5000";
