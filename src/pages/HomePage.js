@@ -55,7 +55,7 @@ const Home = () => {
   return (
     <div className="container mt-5 text-center" style={{ backgroundColor: '#add8e6', padding: '20px', borderRadius: '100px' }}>
       <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
-        관리자 페이지 31조 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+        관리자 페이지 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
       </h1>
       <img src="/static/homeimg.jpg" alt="Welcome" className="img-fluid rounded my-3" />
 
