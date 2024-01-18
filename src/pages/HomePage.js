@@ -2,14 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
 import Logo from './Logo'; // Logo 컴포넌트를 import합니다
 import { useSpring, animated } from 'react-spring';
+import animationData from './json/Dashboard.json';
+import Lottie from 'lottie-react';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [, setCompanyId] = useState(null);
-  const [companyName, setCompanyName] = useState('');
+  const [companyName, ] = useState('');
   const [role, setRole] = useState('');
   const [showLogo, setShowLogo] = useState(true);
   const [showContent, setShowContent] = useState(false); // 새로운 상태 추가
@@ -26,10 +27,10 @@ const Home = () => {
         setCompanyId(storedCompanyId);
         setRole(storedRole);
 
-        if (token && storedCompanyId) {
-          const response = await axios.get(`${URL}/api/getCompanyName/${storedCompanyId}`);
-          setCompanyName(response.data.company_name);
-        }
+        // if (token && storedCompanyId) {
+          // const response = await axios.get(`${URL}/api/getCompanyName/${storedCompanyId}`);
+          // setCompanyName(response.data.company_name);
+        // }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -63,25 +64,40 @@ const Home = () => {
   };
 
   const fadeAnimation = useSpring({
-    opacity: showContent ? 1 : 0, // 투명도 설정 (showContent 상태에 따라 다르게 적용)
-    from: { opacity: showLogo ? 1 : 0 }, // 초기 투명도 값 (showLogo 상태에 따라 다르게 적용)
-    config: { duration: 2000 },
+    // opacity: showContent ? 1 : 0, // 투명도 설정 (showContent 상태에 따라 다르게 적용)
+    // from: { opacity: showLogo ? 1 : 0 }, // 초기 투명도 값 (showLogo 상태에 따라 다르게 적용)
   });
 
   return (
-    <animated.div style={{ ...fadeAnimation, backgroundColor: '#add8e6', padding: '20px', borderRadius: '100px' }} className="container mt-5 text-center">
+    <animated.div
+    style={{
+      ...fadeAnimation,
+      backgroundColor: '#add8e6',
+      minHeight: '100vh',
+      padding: '20px',
+      borderRadius: '0', // 또는 원하는 각도로 설정, 예: '10px'
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+    >
       {showLogo && <Logo onAnimationEnd={handleLogoAnimationEnd} />}
       {/* showContent 상태가 true일 때만 홈화면을 렌더링합니다 */}
       {showContent && (
         <>
-          <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+          <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '100px'}}>
+            
+          
             관리자 페이지 test <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
           </h1>
-          <img src="/static/homeimg.jpg" alt="Welcome" className="img-fluid rounded my-3" />
-
-          <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
-            SaaS 관리자 페이지 입니다 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
-          </h1>
+          <div style={{ width: '500px', height: '200px' }}>
+            <Lottie animationData={animationData} />
+            </div>
+            <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '100px' }}>
+              SaaS 관리자 페이지 입니다 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+            </h1>
+          
           <nav>
             <ul className="list-inline">
               {isLoggedIn ? (
@@ -108,6 +124,7 @@ const Home = () => {
                     <Link to="/signup" className="btn btn-success">
                       회원가입
                     </Link>
+                    
                   </li>
                 </>
               )}

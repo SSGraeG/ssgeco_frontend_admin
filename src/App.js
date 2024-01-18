@@ -7,10 +7,12 @@ import HomePage from './pages/HomePage';
 import AdminPage2 from './pages/AdminPage2';
 import RowAdminPage from './pages/RowAdminPage';  // 새로운 페이지를 추가
 import './css/App.css'
+import Header from './pages/Header';
 
 const App = () => {
   return (
     <Router>
+      <Header/>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<AdminPage />} />

@@ -1,20 +1,33 @@
 // Logo.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
+import animationData from './json/plant-sprout.json';
+import Lottie from 'lottie-react';
 
 const Logo = ({ onAnimationEnd }) => {
   const logoAnimation = useSpring({
-    opacity: 0,         // Start with opacity 0
-    transform: 'scale(1.5)', // Start with a scale of 1.5 (you can adjust this value)
-    from: { opacity: 1, transform: 'scale(1)' }, // Animate to opacity 1 and scale 1
-    config: { duration: 2000 },
-    onRest: onAnimationEnd,
+    opacity: 1,
+    from: { opacity: 0 },
+    config: { mass: 16, tension: 10, friction: 10, duration: 3000 },
   });
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onAnimationEnd();
+    }, 3000);
+
+    // 컴포넌트가 언마운트되면 타임아웃을 클리어
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [onAnimationEnd]);
 
   return (
     <animated.div style={logoAnimation} className="logo-container">
       {/* Your logo image goes here */}
-      <img src="/static/homeimg.jpg" alt="Logo" />
+      <div style={{ width: '300px', height: '200px' }}>
+            <Lottie animationData={animationData} />
+            </div>
     </animated.div>
   );
 };

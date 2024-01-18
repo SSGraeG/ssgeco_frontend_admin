@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:5000",
   "name": "my-react-app",
   "version": "0.1.0",
   "private": true,
@@ -11,6 +10,7 @@
     "bootstrap": "^5.3.2",
     "chartjs-plugin-datalabels": "^2.2.0",
     "http-proxy-middleware": "^2.0.6",
+    "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-chartjs-2": "^5.2.0",

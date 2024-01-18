@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
 import AdminPage2 from './AdminPage2';
 import { Bar } from 'react-chartjs-2';
 import { Chart } from 'chart.js/auto';
 import { URL } from '../BaseURL';
+import '../css/styles.css'; // 전역 스타일 파일 가져오기
+
 
 const AdminPage = ({ isAdmin }) => {
   const [data, setData] = useState(null);
@@ -102,10 +103,11 @@ const AdminPage = ({ isAdmin }) => {
 
   return (
     <div className="container mt-4">
-      {isAdmin || userRole === '1' ? (
+    {isAdmin || userRole === '1' ? (
         <>
           <AdminPage2 isAdmin={isAdmin} companyUserCounts={companyUserCounts} />
           <div className="mt-4">
+
             <h4>기업별 유저 테이블 레코드 수</h4>
             <Bar
               data={{
@@ -138,9 +140,6 @@ const AdminPage = ({ isAdmin }) => {
               }}
             />
           </div>
-          <Link to="/" className="btn btn-primary mr-2" onClick={destroyChart}>
-            홈으로 이동
-          </Link>
         </>
       ) : (
         <p className="mt-4">You don't have permission to access this page.</p>
