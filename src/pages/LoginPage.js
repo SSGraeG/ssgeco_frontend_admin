@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import '../css/login.css'; // Ensure that the correct path to your CSS file is used
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../BaseURL';
@@ -35,23 +35,55 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px', fontFamily: 'Arial, sans-serif' }}>
-      <h2>로그인</h2>
-      <Form>
-        <Form.Group controlId="formEmail">
-          <Form.Label>이메일:</Form.Label>
-          <Form.Control type="text" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group controlId="formPassword">
-          <Form.Label>비밀번호:</Form.Label>
-          <Form.Control type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </Form.Group>
-
-        <Button variant="primary" onClick={handleLogin}>
-          로그인
-        </Button>
-      </Form>
+    <div className="container">
+      <img className="wave" src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/wave.png" alt="wave" />
+      <div className="img">
+        <img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/bg.svg" alt="background" />
+      </div>
+      <div className="login-content">
+        <form>
+          <img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg" alt="avatar" />
+          <h2 className="title">Welcome</h2>
+          <div className="input-div one">
+            <div className="i">
+              <i className="fas fa-user"></i>
+            </div>
+            <div className="div">
+              <h5>Username</h5>
+              <input
+                type="text"
+                className="input"
+                placeholder="E-Mail"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="input-div pass">
+            <div className="i">
+              <i className="fas fa-lock"></i>
+            </div>
+            <div className="div">
+              <h5>Password</h5>
+              <input
+                type="password"
+                className="input"
+                placeholder="Password"
+                pattern=".{6,}"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <button type="button" onClick={() => navigate('/signup')}>
+            signup
+          </button>
+          <input type="submit" className="btn" value="Login" onClick={handleLogin} />
+        </form>
+      </div>
     </div>
   );
 };

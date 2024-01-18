@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../BaseURL';
+import '../css/login.css'; // Import the login.css for styling
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
@@ -48,13 +49,20 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="container mt-5" style={{ backgroundColor: '#f5f5dc', padding: '20px', borderRadius: '10px' }}>
-      <h2>회원가입</h2>
-      <Form>
-        <Form.Group controlId="formUsername">
-          <Form.Label>이름:</Form.Label>
-          <Form.Control type="text" placeholder="이름" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </Form.Group>
+    <div className="container">
+      <img className="wave" src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/wave.png" alt="wave" />
+      <div className="img">
+        <img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/bg.svg" alt="background" />
+      </div>
+      <div className="login-content">
+        <form>
+          <img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg" alt="avatar" />
+          <h2 className="title">회원가입</h2>
+
+          <Form.Group controlId="formUsername">
+            <Form.Label>이름:</Form.Label>
+            <Form.Control type="text" placeholder="이름" value={username} onChange={(e) => setUsername(e.target.value)} />
+          </Form.Group>
 
         <Form.Group controlId="formUserId">
           <Form.Label>사용자 아이디:</Form.Label>
@@ -108,9 +116,10 @@ const SignupPage = () => {
         </Form.Group>
 
         <Button variant="primary" onClick={handleSignup}>
-          회원가입
-        </Button>
-      </Form>
+            회원가입
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };
