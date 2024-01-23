@@ -35,7 +35,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
         // const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
         // const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
   
-        const a1 = response.data.users.filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
+        const a1 = response.data.users.filter((user) => user.aiCategory === '일회용기 세척 여부 AI').length;
         const a2 = response.data.users.filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
         const a3 = response.data.users.filter((user) => user.aiCategory === '사람 인식 여부 AI').length;
   
