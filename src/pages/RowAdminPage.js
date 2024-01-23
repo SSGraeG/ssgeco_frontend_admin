@@ -193,7 +193,7 @@ const RowAdminPage = () => {
           </select>
 
           <button onClick={handleCreateCoupon}>Create Coupon</button>
-        </div>3.36.124.56
+        </div>
       </div>
 
       <div className="admin-section">

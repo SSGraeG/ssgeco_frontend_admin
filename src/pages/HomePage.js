@@ -89,13 +89,13 @@ const Home = () => {
           <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '100px'}}>
             
           
-            관리자 페이지 test23 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+            SSG-ECO<br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
           </h1>
           <div style={{ width: '500px', height: '200px' }}>
             <Lottie animationData={animationData} />
             </div>
             <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '100px' }}>
-              SaaS 관리자 페이지 입니다 test23 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+              <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
             </h1>
           
           <nav>
