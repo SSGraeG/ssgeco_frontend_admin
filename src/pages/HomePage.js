@@ -89,7 +89,7 @@ const Home = () => {
           <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold', marginBottom: '100px'}}>
             
           
-            관리자 페이지 test2 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
+            관리자 페이지 test232322 <br /> {companyName && `"${companyName}"의 관리자 계정입니다. `}
           </h1>
           <div style={{ width: '500px', height: '200px' }}>
             <Lottie animationData={animationData} />
