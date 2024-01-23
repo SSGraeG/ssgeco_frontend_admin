@@ -136,7 +136,6 @@ const RowAdminPage = () => {
           <button className="home-button">Home</button>
         </Link>
       </div>
-
       <div className="admin-section">
         <h2>유저 정보 {company_id}</h2>
         <table className="user-table">
