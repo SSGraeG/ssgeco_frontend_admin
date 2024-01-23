@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../css/RowAdminPage.css'; // Import a CSS file for styling (create a new CSS file)
 import { URL } from '../BaseURL';
 
@@ -127,15 +127,11 @@ const RowAdminPage = () => {
   };
 
   return (
-    <div className="admin-container" style={{ backgroundColor: 'beige' }}>
+    <div className="admin-container">
       <div className="admin-header">
-      <h1 style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
-       관리자 페이지<br /> 
-      </h1>
-        <Link to="/" className="home-link">
-          <button className="home-button">Home</button>
-        </Link>
+        <h1>관리자 페이지<br /></h1>
       </div>
+
       <div className="admin-section">
         <h2>유저 정보 {company_id}</h2>
         <table className="user-table">
@@ -163,49 +159,52 @@ const RowAdminPage = () => {
       </div>
 
       <div className="admin-section">
-        <h2>쿠폰 생성</h2>
-        <div className="coupon-form">
-          <label>쿠폰 이름:</label>
-          <input
-            type="text"
-            value={couponName}
-            onChange={(e) => setCouponName(e.target.value)}
-          />
+        <div className="coupon-container">
+          <div className="coupon-form">
+            <h2>쿠폰 생성</h2>
+            <input
+              type="text"
+              value={couponName}
+              onChange={(e) => setCouponName(e.target.value)}
+            />
 
-          <label>포인트 가격:</label>
-          <input
-            type="number"
-            value={usepoint}
-            onChange={(e) => setUsepoint(e.target.value)}
-          />
+            <label>포인트 가격:</label>
+            <input
+              type="number"
+              value={usepoint}
+              onChange={(e) => setUsepoint(e.target.value)}
+            />
 
-          <label>카테고리:</label>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="">기부 & 할인 쿠폰 항목 선택</option>
-            {categoryList.map((category) => (
-              <option key={category.id} value={category.category}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+            <label>카테고리:</label>
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">기부 & 할인 쿠폰 항목 선택</option>
+              {categoryList.map((category) => (
+                <option key={category.id} value={category.category}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
 
-          <button onClick={handleCreateCoupon}>Create Coupon</button>
+            <button onClick={handleCreateCoupon}>Create Coupon</button>
+          </div>
+
+          <div className="coupon-list">
+            <h2>현재 출시된 쿠폰 목록</h2>
+            <ul className="coupon-list">
+              {couponList
+                .filter((coupon) => coupon.category === selectedCategory)
+                .map((coupon) => (
+                  <li key={coupon.id}>
+                    {coupon.name} - {coupon.usepoint} - {coupon.category}
+                    <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
+                  </li>
+                ))}
+            </ul>
+          </div>
         </div>
-      </div>
-
-      <div className="admin-section">
-        <h2>현재 출시된 쿠폰 목록</h2>
-        <ul className="coupon-list">
-          {couponList.map((coupon) => (
-            <li key={coupon.id}>
-              {coupon.name} - {coupon.usepoint} - {coupon.category}
-              <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
       </div>
     </div>
   );

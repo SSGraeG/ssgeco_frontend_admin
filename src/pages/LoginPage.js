@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import '../css/login.css'; // Ensure that the correct path to your CSS file is used
+import React, { useState, useEffect } from 'react';
+import '../css/login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../BaseURL';
@@ -8,6 +8,16 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // This effect will run when the component mounts and whenever the email or password state changes
+    // If either the email or password has a value, hide the guide message
+    const showGuide = !(email || password);
+    const guideElements = document.querySelectorAll('.input-div > div > h5');
+    guideElements.forEach((guideElement) => {
+      guideElement.style.display = showGuide ? 'block' : 'none';
+    });
+  }, [email, password]);
 
   const handleLogin = async () => {
     try {
@@ -49,7 +59,6 @@ const LoginPage = () => {
               <i className="fas fa-user"></i>
             </div>
             <div className="div">
-              <h5>Username</h5>
               <input
                 type="text"
                 className="input"
@@ -66,7 +75,6 @@ const LoginPage = () => {
               <i className="fas fa-lock"></i>
             </div>
             <div className="div">
-              <h5>Password</h5>
               <input
                 type="password"
                 className="input"

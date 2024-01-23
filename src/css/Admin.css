@@ -1,0 +1,11 @@
+.btn-subscription {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .btn-lg {
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+    text-overflow: ellipsis; /* 넘치는 부분에 대한 대체 문자(...) 표시 */
+    padding: 1px 30px; /* 원하는 크기로 조절하세요 */
+    font-size: 20px; /* 적절한 크기로 변경하세요 */
+}
