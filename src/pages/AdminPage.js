@@ -105,7 +105,7 @@ const AdminPage = ({ isAdmin }) => {
     {isAdmin || userRole === '1' ? (
         <>
           <AdminPage2 isAdmin={isAdmin} companyUserCounts={companyUserCounts} />
-          <div className="mt-4">
+          <div className="mt-4" style={{ width: '100%', height: '400px' }}>
 
             <h4>기업별 유저 테이블 레코드 수</h4>
             <Bar

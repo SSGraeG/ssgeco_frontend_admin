@@ -6,6 +6,7 @@ import PChart from '../chart/PChart';
 import AiChart from '../chart/AiChart';
 // import InfraChart from '../chart/InfraChart';
 import { URL } from '../BaseURL';
+import '../css/Admin.css'; // 전역 스타일 파일 가져오기
 
 
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
@@ -35,7 +36,7 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
         // const i2 = response.data.users.filter((user) => user.infraCategory === 'Case2').length;
         // const i3 = response.data.users.filter((user) => user.infraCategory === 'Case3').length;
   
-        const a1 = response.data.users.filter((user) => user.aiCategory === '일회 용기 세척 여부 AI').length;
+        const a1 = response.data.users.filter((user) => user.aiCategory === '일회용기 세척 여부 AI').length;
         const a2 = response.data.users.filter((user) => user.aiCategory === '택배 테이프 제거 여부 AI').length;
         const a3 = response.data.users.filter((user) => user.aiCategory === '사람 인식 여부 AI').length;
   
@@ -169,13 +170,19 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
       {isAdmin || userRole === '1' ? (
     <>
         <h2 className="mb-4">최종 관리자 대시보드</h2>
-          <div className="mb-4">
-            <button className={`btn ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('all')}>전체</button>
-            <button className={`btn ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
-            <button className={`btn ${selectedTab === 'notSubscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('notSubscribed')}>구독 안 함</button>
-            <button className="btn btn-info mr-2" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
-            <button className="btn btn-info mr-2" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
-          </div>
+        <div className="btn-group btn-group-sm mr-2">
+          <button className={`btn btn-subscription ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} btn-lg`} onClick={() => handleTabClick('all')}>전체</button>
+          <button className={`btn btn-subscription ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} btn-lg`} onClick={() => handleTabClick('subscribed')}>구독</button>
+          <button className={`btn btn-subscription ${selectedTab === 'notSubscribed' ? 'btn-primary' : 'btn-secondary'} btn-lg`} onClick={() => handleTabClick('notSubscribed')}>비구독</button>
+        </div>
+
+        <div className="btn-group btn-group-sm mr-2">
+          <button className="btn btn-info btn-lg" onClick={() => handleSort('usersnum')}>유저 수 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
+        </div>
+
+        <div className="btn-group btn-group-sm">
+          <button className="btn btn-info btn-lg" onClick={() => handleSort('end_date')}>만료일 정렬 {sortOrder === 'asc' ? '▲' : '▼'}</button>
+        </div>
 
           {renderTable()}
 
@@ -198,12 +205,6 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
       <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
     </div>
   </div>
-  {/* <div className="col-md-3">
-    <div className="mb-4">
-      <h4 className="text-center">인프라 선택 비율 차트</h4>
-      <InfraChart Case1={InfraChartData.Case1} Case2={InfraChartData.Case2} Case3={InfraChartData.Case3} />
-    </div>
-  </div> */}
 </div>
 </>
       ) : (
