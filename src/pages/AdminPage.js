@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminPage2 from './AdminPage2';
 import { Bar } from 'react-chartjs-2';
 import { Chart } from 'chart.js/auto';
@@ -102,7 +101,7 @@ const AdminPage = ({ isAdmin }) => {
   }, [createChart, destroyChart]);
 
   return (
-    <div className="container mt-4">
+    <div>
     {isAdmin || userRole === '1' ? (
         <>
           <AdminPage2 isAdmin={isAdmin} companyUserCounts={companyUserCounts} />

@@ -6,9 +6,7 @@ import PChart from '../chart/PChart';
 import AiChart from '../chart/AiChart';
 // import InfraChart from '../chart/InfraChart';
 import { URL } from '../BaseURL';
-import animationData from './json/Business Analysis.json';
-import Lottie from 'lottie-react';
-import '../css/styles.css'; // 전역 스타일 파일 가져오기
+
 
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   const [data, setData] = useState(null);
@@ -167,16 +165,10 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
   };
 
   return (
-    <div className="container mt-4">
+    <div>
       {isAdmin || userRole === '1' ? (
-        <>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'Right', width: '100%', height: '100%' }}>
-            <div style={{ width: '200px', height: '100px', marginRight: '20px' }}>
-              <Lottie animationData={animationData} />
-            </div>
-          </div>
-
-      <h2 className="mb-4">최종 관리자 대시보드</h2>
+    <>
+        <h2 className="mb-4">최종 관리자 대시보드</h2>
           <div className="mb-4">
             <button className={`btn ${selectedTab === 'all' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('all')}>전체</button>
             <button className={`btn ${selectedTab === 'subscribed' ? 'btn-primary' : 'btn-secondary'} mr-2`} onClick={() => handleTabClick('subscribed')}>구독 중</button>
