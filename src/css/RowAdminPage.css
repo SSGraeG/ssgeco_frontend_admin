@@ -16,14 +16,20 @@
   color: #3498db; /* Blue color for section headings */
 }
 
-.user-table {
+.user-table,
+.coupon-table,
+.mileage-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px; /* Increased margin for better separation */
 }
 
 .user-table th,
-.user-table td {
+.user-table td,
+.coupon-table th,
+.coupon-table td,
+.mileage-table th,
+.mileage-table td {
   border: 1px solid #ddd;
   padding: 12px; /* Increased padding for better readability */
   text-align: center;
@@ -44,14 +50,31 @@
   box-sizing: border-box; /* Include padding in the width calculation */
 }
 
+.coupon-container {
+  display: flex;
+  justify-content: space-between; /* 가로 방향으로 여백을 띄우도록 설정 */
+}
+
 .coupon-list {
   list-style: none;
   padding: 0;
   text-align: center;
+  font-size: 18px; /* 폰트 크기 설정 */
+  font-weight: bold; /* 폰트 굵기 설정 */
+  margin-left: 120px; /* 각 섹션 간에 20px의 간격을 띄웁니다. */
 }
 
-.coupon-list li {
-  margin-bottom: 15px;
+.mileage-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; /* Increased margin for better separation */
+}
+
+.mileage-table th,
+.mileage-table td {
+  border: 1px solid #ddd;
+  padding: 12px; /* Increased padding for better readability */
+  text-align: center;
 }
 
 /* Button styling */
@@ -68,15 +91,19 @@ button {
 button:hover {
   background-color: #2c3e50;
 }
-/* RowAdminPage.css */
+.admin-section {
+   background: 'linear-gradient(to bottom right, #53e3a6, white';
 
-.coupon-container {
-  display: flex;
-  justify-content: space-between; /* 가로 방향으로 여백을 띄우도록 설정 */
+}.admin-header {
+  text-align: center;
 }
-.coupon-list {
-  font-size: 18px; /* 폰트 크기 설정 */
-  font-weight: bold; /* 폰트 굵기 설정 */
-  margin-left: 120px; /* 각 섹션 간에 20px의 간격을 띄웁니다. */
 
+.admin-header h1 {
+  color: #3498db; /* Blue color for section headings */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Text shadow for h1 */
+}
+
+.admin-section h2 {
+  color: #3498db; /* Blue color for section headings */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow for h2 */
 }
