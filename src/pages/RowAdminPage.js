@@ -13,7 +13,7 @@ const RowAdminPage = () => {
   const [couponList, setCouponList] = useState([]);
   const [mileageTracking, setMileageTracking] = useState([]);
   const [categoryList] = useState([
-    { id: 1, name: 'Donation', category: 'Donation' },
+    { id: 1, name: 'Donation', category: 'Donation'},
     { id: 2, name: 'Coupon', category: 'Coupon' },
   ]);
   const { company_id } = useParams();
@@ -24,7 +24,6 @@ const RowAdminPage = () => {
       try {
         const token = localStorage.getItem('token');
         const companyId = localStorage.getItem('company_id');
-
         const response = await axios.get(`${URL}/rowadmin`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -33,7 +32,6 @@ const RowAdminPage = () => {
         });
 
         setUserData(response.data.users);
-
         const couponResponse = await axios.get(`${URL}/company/user/coupon`, {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -208,7 +206,7 @@ const RowAdminPage = () => {
     <button onClick={handleCreateCoupon}>Create Coupon</button>
   </div>
 
-          <div className="coupon-container" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+  <div className="coupon-container" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
   {/* 왼쪽 표 - Donation 카테고리 쿠폰 목록 */}
   <div className="coupon-list">
     <h2>Donation 카테고리별 쿠폰 목록</h2>
