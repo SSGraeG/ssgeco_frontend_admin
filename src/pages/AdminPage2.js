@@ -7,6 +7,7 @@ import AiChart from '../chart/AiChart';
 // import InfraChart from '../chart/InfraChart';
 import { URL } from '../BaseURL';
 import '../css/Admin.css'; // 전역 스타일 파일 가져오기
+import '../css/styles.css'; // 전역 스타일 파일 가져오기
 
 
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
