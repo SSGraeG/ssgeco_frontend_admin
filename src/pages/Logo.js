@@ -25,7 +25,7 @@ const Logo = ({ onAnimationEnd }) => {
   return (
     <animated.div style={logoAnimation} className="logo-container">
       {/* Your logo image goes here */}
-      <div style={{ width: '300px', height: '200px' }}>
+      <div style={{ width: '400px', height: '400px' }}>
             <Lottie animationData={animationData} />
             </div>
     </animated.div>
