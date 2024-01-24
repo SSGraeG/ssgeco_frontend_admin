@@ -1,7 +1,8 @@
+// RowAdminPage.js 파일 내용
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import '../css/RowAdminPage.css'; // Import a CSS file for styling (create a new CSS file)
+import '../css/RowAdminPage.css';
 import { URL } from '../BaseURL';
 
 const RowAdminPage = () => {
@@ -10,23 +11,24 @@ const RowAdminPage = () => {
   const [usepoint, setUsepoint] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [couponList, setCouponList] = useState([]);
+  const [mileageTracking, setMileageTracking] = useState([]);
   const [categoryList] = useState([
     { id: 1, name: 'Donation', category: 'Donation' },
     { id: 2, name: 'Coupon', category: 'Coupon' },
   ]);
-
   const { company_id } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const company_id = localStorage.getItem('company_id');
+        const companyId = localStorage.getItem('company_id');
 
         const response = await axios.get(`${URL}/rowadmin`, {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Company-ID': company_id,
+            'Company-ID': companyId,
           },
         });
 
@@ -35,22 +37,32 @@ const RowAdminPage = () => {
         const couponResponse = await axios.get(`${URL}/company/user/coupon`, {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Company-ID': company_id,
+            'Company-ID': companyId,
           },
         });
         setCouponList(couponResponse.data.coupons);
+
+        const responseMileage = await axios.get(`${URL}/company/user/mileage`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Company-ID': companyId,
+          },
+          params: {
+            page: currentPage,
+          },
+        });
+        setMileageTracking(responseMileage.data.mileage_tracking);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('데이터를 가져오는 중 오류 발생:', error);
       }
     };
-
     fetchData();
-  }, [company_id]);
+  }, [company_id, currentPage]);
 
   const handleCreateCoupon = async () => {
     try {
       const token = localStorage.getItem('token');
-      const company_id = localStorage.getItem('company_id');
+      const companyId = localStorage.getItem('company_id');
 
       const response = await axios.post(
         `${URL}/company/user/coupon`,
@@ -62,7 +74,7 @@ const RowAdminPage = () => {
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Company-ID': company_id,
+            'Company-ID': companyId,
             'Content-Type': 'application/json',
           },
         }
@@ -72,7 +84,6 @@ const RowAdminPage = () => {
 
       const updatedCouponList = [...couponList, response.data.coupon];
       setCouponList(updatedCouponList);
-
     } catch (error) {
       console.error('Error creating coupon:', error);
     }
@@ -81,14 +92,14 @@ const RowAdminPage = () => {
   const handleDeleteUser = async (email) => {
     try {
       const token = localStorage.getItem('token');
-      const company_id = localStorage.getItem('company_id');
+      const companyId = localStorage.getItem('company_id');
 
       const response = await axios.delete(
         `${URL}/company/user/${email}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Company-ID': company_id,
+            'Company-ID': companyId,
           },
         }
       );
@@ -105,14 +116,14 @@ const RowAdminPage = () => {
   const handleDeleteCoupon = async (couponId) => {
     try {
       const token = localStorage.getItem('token');
-      const company_id = localStorage.getItem('company_id');
+      const companyId = localStorage.getItem('company_id');
 
       const response = await axios.delete(
         `${URL}/company/user/coupon/${couponId}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
-            'Company-ID': company_id,
+            'Company-ID': companyId,
           },
         }
       );
@@ -124,6 +135,10 @@ const RowAdminPage = () => {
     } catch (error) {
       console.error('Error deleting coupon:', error);
     }
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -156,6 +171,17 @@ const RowAdminPage = () => {
             ))}
           </tbody>
         </table>
+
+        {/* 페이징 컴포넌트 추가 */}
+        <div className="pagination">
+          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+            이전 페이지
+          </button>
+          <span>{currentPage}</span>
+          <button onClick={() => handlePageChange(currentPage + 1)}>
+            다음 페이지
+          </button>
+        </div>
       </div>
 
       <div className="admin-section">
@@ -192,18 +218,99 @@ const RowAdminPage = () => {
           </div>
 
           <div className="coupon-list">
-            <h2>현재 출시된 쿠폰 목록</h2>
-            <ul className="coupon-list">
-              {couponList
-                .filter((coupon) => coupon.category === selectedCategory)
-                .map((coupon) => (
-                  <li key={coupon.id}>
-                    {coupon.name} - {coupon.usepoint} - {coupon.category}
-                    <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
-                  </li>
-                ))}
-            </ul>
-          </div>
+      <h2>전체 쿠폰 목록</h2>
+      <table className="coupon-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Coupon Name</th>
+            <th>Use Point</th>
+            <th>Category</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {couponList.map((coupon) => (
+            <tr key={coupon.id}>
+              <td>{coupon.id}</td>
+              <td>{coupon.name}</td>
+              <td>{coupon.usepoint}</td>
+              <td>{coupon.category}</td>
+              <td>
+                <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div className="coupon-list">
+      <h2>카테고리별 쿠폰 목록</h2>
+      <table className="coupon-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Coupon Name</th>
+            <th>Use Point</th>
+            <th>Category</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {couponList.map((coupon) => (
+            <tr key={coupon.id}>
+              <td>{coupon.id}</td>
+              <td>{coupon.name}</td>
+              <td>{coupon.usepoint}</td>
+              <td>{coupon.category}</td>
+              <td>
+                <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+      <div className="admin-section">
+  <h2>Mileage Tracking</h2>
+  <table className="mileage-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Use Date</th>
+        <th>User Email</th>
+        <th>Before Mileage</th>
+        <th>Mileage Category ID</th>
+        <th>After Mileage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {mileageTracking.map((mileage) => (
+        <tr key={mileage.id}>
+          <td>{mileage.id}</td>
+          <td>{mileage.use_date}</td>
+          <td>{mileage.user_email}</td>
+          <td>{mileage.before_mileage}</td>
+          <td>{mileage.mileage_category_id}</td>
+          <td>{mileage.after_mileage}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+        {/* 페이징 컴포넌트 추가 */}
+        <div className="pagination">
+          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+            이전 페이지
+          </button>
+          <span>{currentPage}</span>
+          <button onClick={() => handlePageChange(currentPage + 1)}>
+            다음 페이지
+          </button>
         </div>
       </div>
     </div>
