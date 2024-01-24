@@ -147,7 +147,7 @@ const RowAdminPage = () => {
         <h1>관리자 페이지<br /></h1>
       </div>
 
-      <div className="admin-section">
+      <div className="admin-section" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
         <h2>유저 정보 {company_id}</h2>
         <table className="user-table">
           <thead>
@@ -174,108 +174,105 @@ const RowAdminPage = () => {
 
         {/* 페이징 컴포넌트 추가 */}
         <div className="pagination">
-          <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-            이전 페이지
-          </button>
-          <span>{currentPage}</span>
-          <button onClick={() => handlePageChange(currentPage + 1)}>
-            다음 페이지
-          </button>
         </div>
       </div>
+      <div className="coupon-container">
+    <div className="admin-section" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+    <h2>쿠폰 생성</h2>
+    <input
+      type="text"
+      value={couponName}
+      onChange={(e) => setCouponName(e.target.value)}
+    />
 
-      <div className="admin-section">
-        <div className="coupon-container">
-          <div className="coupon-form">
-            <h2>쿠폰 생성</h2>
-            <input
-              type="text"
-              value={couponName}
-              onChange={(e) => setCouponName(e.target.value)}
-            />
+    <label>포인트 가격:</label>
+    <input
+      type="number"
+      value={usepoint}
+      onChange={(e) => setUsepoint(e.target.value)}
+    />
 
-            <label>포인트 가격:</label>
-            <input
-              type="number"
-              value={usepoint}
-              onChange={(e) => setUsepoint(e.target.value)}
-            />
+    <label>카테고리:</label>
+    <select
+      value={selectedCategory}
+      onChange={(e) => setSelectedCategory(e.target.value)}
+    >
+      <option value="">기부 & 할인 쿠폰 항목 선택</option>
+      {categoryList.map((category) => (
+        <option key={category.id} value={category.category}>
+          {category.name}
+        </option>
+      ))}
+    </select>
 
-            <label>카테고리:</label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">기부 & 할인 쿠폰 항목 선택</option>
-              {categoryList.map((category) => (
-                <option key={category.id} value={category.category}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-
-            <button onClick={handleCreateCoupon}>Create Coupon</button>
-          </div>
-
-          <div className="coupon-list">
-      <h2>전체 쿠폰 목록</h2>
-      <table className="coupon-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Coupon Name</th>
-            <th>Use Point</th>
-            <th>Category</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {couponList.map((coupon) => (
-            <tr key={coupon.id}>
-              <td>{coupon.id}</td>
-              <td>{coupon.name}</td>
-              <td>{coupon.usepoint}</td>
-              <td>{coupon.category}</td>
-              <td>
-                <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-
-    <div className="coupon-list">
-      <h2>카테고리별 쿠폰 목록</h2>
-      <table className="coupon-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Coupon Name</th>
-            <th>Use Point</th>
-            <th>Category</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {couponList.map((coupon) => (
-            <tr key={coupon.id}>
-              <td>{coupon.id}</td>
-              <td>{coupon.name}</td>
-              <td>{coupon.usepoint}</td>
-              <td>{coupon.category}</td>
-              <td>
-                <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <button onClick={handleCreateCoupon}>Create Coupon</button>
   </div>
-</div>
 
-      <div className="admin-section">
+          <div className="coupon-container" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+  {/* 왼쪽 표 - Donation 카테고리 쿠폰 목록 */}
+  <div className="coupon-list">
+    <h2>Donation 카테고리별 쿠폰 목록</h2>
+    <table className="coupon-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Coupon Name</th>
+          <th>Use Point</th>
+          <th>Category</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {couponList
+          .filter((coupon) => coupon.category === 'Donation')
+          .map((coupon) => (
+            <tr key={coupon.id}>
+              <td>{coupon.id}</td>
+              <td>{coupon.name}</td>
+              <td>{coupon.usepoint}</td>
+              <td>{coupon.category}</td>
+              <td>
+                <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+      </tbody>
+    </table>
+  </div>
+
+  {/* 오른쪽 표 - Coupon 카테고리 쿠폰 목록 */}
+  <div className="coupon-list">
+    <h2>Coupon 카테고리별 쿠폰 목록</h2>
+    <table className="coupon-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Coupon Name</th>
+          <th>Use Point</th>
+          <th>Category</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {couponList
+          .filter((coupon) => coupon.category === 'Coupon')
+          .map((coupon) => (
+            <tr key={coupon.id}>
+              <td>{coupon.id}</td>
+              <td>{coupon.name}</td>
+              <td>{coupon.usepoint}</td>
+              <td>{coupon.category}</td>
+              <td>
+                <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+      </tbody>
+    </table>
+  </div>
+ </div>
+ </div>
+<div className="admin-section" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
   <h2>Mileage Tracking</h2>
   <table className="mileage-table">
     <thead>
