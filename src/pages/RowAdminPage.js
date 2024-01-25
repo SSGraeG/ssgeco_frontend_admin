@@ -13,8 +13,8 @@ const RowAdminPage = () => {
   const [couponList, setCouponList] = useState([]);
   const [mileageTracking, setMileageTracking] = useState([]);
   const [categoryList] = useState([
-    { id: 1, name: 'Donation', category: 'Donation'},
-    { id: 2, name: 'Coupon', category: 'Coupon' },
+    { id: 1, name: 'donation', category: 'donation'},
+    { id: 2, name: 'coupon', category: 'coupon' },
   ]);
   const { company_id } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
@@ -213,8 +213,7 @@ const RowAdminPage = () => {
     <table className="coupon-table">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Coupon Name</th>
+          <th>Donation Name</th>
           <th>Use Point</th>
           <th>Category</th>
           <th>Action</th>
@@ -222,10 +221,9 @@ const RowAdminPage = () => {
       </thead>
       <tbody>
         {couponList
-          .filter((coupon) => coupon.category === 'Donation')
+          .filter((coupon) => coupon.category === 'donation')
           .map((coupon) => (
             <tr key={coupon.id}>
-              <td>{coupon.id}</td>
               <td>{coupon.name}</td>
               <td>{coupon.usepoint}</td>
               <td>{coupon.category}</td>
@@ -244,7 +242,6 @@ const RowAdminPage = () => {
     <table className="coupon-table">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Coupon Name</th>
           <th>Use Point</th>
           <th>Category</th>
@@ -253,10 +250,9 @@ const RowAdminPage = () => {
       </thead>
       <tbody>
         {couponList
-          .filter((coupon) => coupon.category === 'Coupon')
+          .filter((coupon) => coupon.category === 'coupon')
           .map((coupon) => (
             <tr key={coupon.id}>
-              <td>{coupon.id}</td>
               <td>{coupon.name}</td>
               <td>{coupon.usepoint}</td>
               <td>{coupon.category}</td>
