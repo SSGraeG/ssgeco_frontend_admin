@@ -4,6 +4,7 @@ import Logo from './Logo';
 import { useSpring, animated } from 'react-spring';
 import Lottie from 'lottie-react';
 import animationData from './json/Dash.json';
+import '../css/Home.css';
 
 const Home = () => {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(true);
@@ -39,12 +40,13 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const bubbleElements = document.querySelectorAll('.bg-bubbles li');
-    bubbleElements.forEach((bubble, index) => {
-      bubble.classList.add('animate-bubble');
-      bubble.style.animationDelay = `${index * 2}s`;
-    });
-  }, []);
+  const bubbleElements = document.querySelectorAll('.bg-bubbles li');
+
+  bubbleElements.forEach((bubble, index) => {
+    bubble.classList.add('animate-bubble');
+    bubble.style.animationDelay = `${index * 2}s`;
+  });
+}, []);
 
   const handleLogoAnimationEnd = () => {
     setShowLogo(false);
@@ -138,5 +140,6 @@ const Home = () => {
     </animated.div>
   );
 };
+
 
 export default Home;
