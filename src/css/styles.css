@@ -1,0 +1,6 @@
+/* styles.css */
+
+body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, textarea {
+  font-family: 'K2D', sans-serif;
+  font-weight: bold;
+}

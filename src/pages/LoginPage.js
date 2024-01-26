@@ -28,13 +28,13 @@ const LoginPage = () => {
           password: password,
         });
 
-        const { token, company_id, role, subscription_status, infraCategory } = response.data;
+        const { token, company_id, role, subscription_status,infraCategory } = response.data;
 
         localStorage.setItem('token', token);
         localStorage.setItem('company_id', company_id);
         localStorage.setItem('role', role);
         localStorage.setItem('subscription_status', subscription_status); // 이 부분을 추가
-        localStorage.setItem('infraCategory', infraCategory); // aiCategory 추가
+        localStorage.setItem('infraCategory', infraCategory); //  추가
 
         alert('로그인이 완료되었습니다.');
         navigate('/');
