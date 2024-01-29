@@ -24,10 +24,10 @@ const Logo = ({ onAnimationEnd }) => {
 
   return (
     <animated.div style={logoAnimation} className="logo-container">
-      {/* Your logo image goes here */}
       <div style={{ width: '400px', height: '400px' }}>
-            <Lottie animationData={animationData} />
-            </div>
+        <Lottie animationData={animationData} />
+      </div>
+      <h1 style={{textAlign: 'center', fontSize: '24px', fontWeight: 'bold', marginTop: '20px' }}>로딩 중...</h1>
     </animated.div>
   );
 };

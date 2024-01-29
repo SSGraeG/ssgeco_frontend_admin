@@ -12,10 +12,6 @@
   margin-bottom: 20px;
 }
 
-.admin-section h2 {
-  color: #3498db; /* Blue color for section headings */
-}
-
 .user-table,
 .coupon-table,
 .mileage-table {
@@ -31,50 +27,12 @@
 .mileage-table th,
 .mileage-table td {
   border: 1px solid #ddd;
-  padding: 12px; /* Increased padding for better readability */
+  padding: 15px; /* Increased padding for better readability */
   text-align: center;
 }
-
-.coupon-form label {
-  display: block;
-  margin-top: 15px; /* Increased margin for better separation */
+h2,h1 {
   text-align: center;
-}
-
-.coupon-form select,
-.coupon-form input {
-  margin-top: 8px; /* Reduced top margin for better alignment */
-  margin-bottom: 15px;
-  padding: 10px; /* Increased padding for better input appearance */
-  width: 100%;
-  box-sizing: border-box; /* Include padding in the width calculation */
-}
-
-.coupon-container {
-  display: flex;
-  justify-content: space-between; /* 가로 방향으로 여백을 띄우도록 설정 */
-}
-
-.coupon-list {
-  list-style: none;
-  padding: 0;
-  text-align: center;
-  font-size: 18px; /* 폰트 크기 설정 */
-  font-weight: bold; /* 폰트 굵기 설정 */
-  margin-left: 120px; /* 각 섹션 간에 20px의 간격을 띄웁니다. */
-}
-
-.mileage-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px; /* Increased margin for better separation */
-}
-
-.mileage-table th,
-.mileage-table td {
-  border: 1px solid #ddd;
-  padding: 12px; /* Increased padding for better readability */
-  text-align: center;
+  margin: 20px; /* 마진 크기를 조절합니다. */
 }
 
 /* Button styling */
@@ -85,25 +43,23 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
-
+.create {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f0f0f0; /* 배경색 설정 */
+  padding: 10px; /* 내부 여백 설정 */
+  margin-bottom: 20px; /* 하단 여백 설정 */
+}
 button:hover {
   background-color: #2c3e50;
 }
-.admin-section {
-   background: 'linear-gradient(to bottom right, #53e3a6, white';
 
-}.admin-header {
+.admin-header {
   text-align: center;
 }
 
 .admin-header h1 {
-  color: #3498db; /* Blue color for section headings */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Text shadow for h1 */
-}
-
-.admin-section h2 {
-  color: #3498db; /* Blue color for section headings */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Text shadow for h2 */
 }

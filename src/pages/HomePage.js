@@ -14,6 +14,7 @@ const Home = () => {
   const [showContent, setShowContent] = useState(false);
   const navigate = useNavigate();
   const [, setCompanyId] = useState(null);
+  const infraCategory = localStorage.getItem('infraCategory'); // infraCategory를 localStorage에서 가져옴
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +69,11 @@ const Home = () => {
     if (role === '1') {
       navigate('/admin');
     } else {
-      navigate('/rowadmin');
+      if (infraCategory === 'Case 1') {
+        navigate('/case1');
+      } else if (infraCategory === 'Case 2') {
+        navigate('/case2');}
+        
     }
   };
 

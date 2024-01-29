@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../BaseURL';
 import '../css/login.css'; // Import the login.css for styling
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 const SignupPage = () => {
   const [username, setUsername] = useState('');
@@ -36,18 +37,34 @@ const SignupPage = () => {
           infraCategory: infraCategory,
           isSubscribed: isSubscribed,
         });
-  
-        alert('회원가입이 완료되었습니다.');
+
+        // Use SweetAlert for success message
+        Swal.fire({
+          title: '회원가입이 완료되었습니다.',
+          icon: 'success',
+          confirmButtonText: '확인',
+        });
+
         navigate('/');
       } else {
-        alert('모든 필드를 입력하세요');
+        // Use SweetAlert for validation error
+        Swal.fire({
+          title: '모든 필드를 입력하세요.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
       }
     } catch (error) {
       console.error('회원가입 실패', error);
-      alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+
+      // Use SweetAlert for failure message
+      Swal.fire({
+        title: '회원가입에 실패했습니다. 다시 시도해주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
     }
   };
-
   return (
     <div className="container">
       <img className="wave" src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/wave.png" alt="wave" />
