@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { URL } from '../BaseURL';
 import '../css/login.css';
+import Swal from 'sweetalert2';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +20,6 @@ const LoginPage = () => {
       guideElement.style.display = showGuide ? 'block' : 'none';
     });
   }, [email, password]);
-
   const handleLogin = async () => {
     try {
       if (email && password) {
@@ -27,23 +27,36 @@ const LoginPage = () => {
           email: email,
           password: password,
         });
-
-        const { token, company_id, role, subscription_status,infraCategory } = response.data;
-
+  
+        const { token, company_id, role, subscription_status, infraCategory } = response.data;
+  
         localStorage.setItem('token', token);
         localStorage.setItem('company_id', company_id);
         localStorage.setItem('role', role);
-        localStorage.setItem('subscription_status', subscription_status); // 이 부분을 추가
-        localStorage.setItem('infraCategory', infraCategory); //  추가
-
-        alert('로그인이 완료되었습니다.');
+        localStorage.setItem('subscription_status', subscription_status);
+        localStorage.setItem('infraCategory', infraCategory);
+  
+        Swal.fire({
+          title: '로그인이 완료되었습니다.',
+          icon: 'success',
+          confirmButtonText: '확인',
+        });
+  
         navigate('/');
       } else {
-        alert('이메일과 비밀번호를 모두 입력하세요.');
+        Swal.fire({
+          title: '이메일과 비밀번호를 모두 입력하세요.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
       }
     } catch (error) {
       console.error('로그인 실패', error);
-      alert('로그인에 실패했습니다. 다시 시도해주세요.');
+      Swal.fire({
+        title: '로그인에 실패했습니다. 다시 시도해주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
     }
   };
 
