@@ -146,14 +146,14 @@ const RowAdminPage = () => {
         <h1>관리자 페이지<br /></h1>
       </div>
 
-      <div className="admin-section" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+      <div className="admin-section">
         <h2>유저 정보 {company_id}</h2>
         <table className="user-table">
           <thead>
             <tr>
               <th>이메일</th>
               <th>이름</th>
-              <th>휴대전화</th>
+              <th>주소</th>
               <th>유저 삭제</th>
             </tr>
           </thead>
@@ -162,7 +162,7 @@ const RowAdminPage = () => {
               <tr key={user.email}>
                 <td>{user.email}</td>
                 <td>{user.name}</td>
-                <td>{user.phone}</td>
+                <td>{user.address}</td>
                 <td>
                   <button onClick={() => handleDeleteUser(user.email)}>Delete</button>
                 </td>
@@ -176,7 +176,7 @@ const RowAdminPage = () => {
         </div>
       </div>
       <div className="coupon-container">
-    <div className="admin-section" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+    <div className="admin-section">
     <h2>쿠폰 생성</h2>
     <input
       type="text"
@@ -207,7 +207,7 @@ const RowAdminPage = () => {
     <button onClick={handleCreateCoupon}>Create Coupon</button>
   </div>
 
-  <div className="coupon-container" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+  <div className="coupon-container">
   {/* 왼쪽 표 - Donation 카테고리 쿠폰 목록 */}
   <div className="coupon-list">
     <h2>Donation 카테고리별 쿠폰 목록</h2>
@@ -267,7 +267,7 @@ const RowAdminPage = () => {
   </div>
  </div>
  </div>
-<div className="admin-section" style={{ background: 'linear-gradient(to bottom right, #53e3a6, white)' }}>
+<div className="create">
   <h2>Mileage Tracking</h2>
   <table className="mileage-table">
     <thead>

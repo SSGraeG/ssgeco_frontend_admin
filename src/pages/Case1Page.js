@@ -200,11 +200,16 @@ const RowAdminPage = () => {
 
   return (
     <div className="admin-container">
-        <div style={{ marginBottom: '10px', width: '10%', height: '10%', overflow: 'hidden' }}>
-          <Lottie animationData={animationData} loop={false} />
-        </div>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', width: '100%' }}>
+      <div style={{ width: '10%', height: '10%', overflow: 'hidden' }}>
+        <Lottie animationData={animationData} loop={false} />
+      </div>
+      <div className="admin-header" style={{ textAlign: 'center' }}>
+        <h1>관리자 페이지<br /></h1>
+      </div>
+    </div>
       <div className="chart-container">
-        <h1>유저 목록</h1>
+        <h2>유저 정보</h2>
         <table className="user-table">
           <thead>
             <tr>
@@ -227,93 +232,101 @@ const RowAdminPage = () => {
           </tbody>
         </table>
       </div>
-      <div className="coupon-container">
-        <div className="admin-section">
-          <h2>쿠폰 생성</h2>
-          <input
-            type="text"
-            value={couponName}
-            onChange={(e) => setCouponName(e.target.value)}
-          />
-          <label>포인트 가격:</label>
-          <input
-            type="number"
-            value={usepoint}
-            onChange={(e) => setUsepoint(e.target.value)}
-          />
-          <label>카테고리:</label>
-            <select
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">기부 & 할인 쿠폰 항목 선택</option>
-              {categoryList.map((category) => (
-                <option key={category.id} value={category.category}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          <button onClick={handleCreateCoupon}>Create Coupon</button>
+      <div className="coupon">
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
+      <h2>쿠폰 생성</h2>
+    </div>
+      <div className="create">
+    <div>
+      <div>쿠폰 생성 명</div>
+      <input
+        type="text"
+        value={couponName}
+        onChange={(e) => setCouponName(e.target.value)}
+      />
+      <div>포인트 가격:</div>
+      <input
+        type="number"
+        value={usepoint}
+        onChange={(e) => setUsepoint(e.target.value)}
+      />
+      <div>카테고리:</div>
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+      >
+        <option value="">기부 & 할인 쿠폰 항목 선택</option>
+        {categoryList.map((category) => (
+          <option key={category.id} value={category.category}>
+            {category.name}
+          </option>
+        ))}
+      </select>
+      <button onClick={handleCreateCoupon}>쿠폰 생성</button>
+    </div>  
+  </div>
+
+        {/* Donation Coupon List Section */}
+        <div className="coupon-list">
+          <h2>기부 카테고리별 쿠폰 목록</h2>
+          <table className="coupon-table">
+            <thead>
+              <tr>
+                <th>기부 이름</th>
+                <th>사용 포인트</th>
+                <th>카테고리</th>
+                <th>동작</th>
+              </tr>
+            </thead>
+            <tbody>
+              {couponList
+                .filter((coupon) => coupon.category === 'donation')
+                .map((coupon) => (
+                  <tr key={coupon.id}>
+                    <td>{coupon.name}</td>
+                    <td>{coupon.usepoint}</td>
+                    <td>{coupon.category}</td>
+                    <td>
+                      <button onClick={() => handleDeleteCoupon(coupon.id)}>삭제</button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
-        <div className="coupon-container">
-          <div className="coupon-list">
-            <h2>기부 카테고리별 쿠폰 목록</h2>
-            <table className="coupon-table">
-              <thead>
-                <tr>
-                  <th>기부 이름</th>
-                  <th>사용 포인트</th>
-                  <th>카테고리</th>
-                  <th>동작</th>
-                </tr>
-              </thead>
-              <tbody>
-                {couponList
-                  .filter((coupon) => coupon.category === 'donation')
-                  .map((coupon) => (
-                    <tr key={coupon.id}>
-                      <td>{coupon.name}</td>
-                      <td>{coupon.usepoint}</td>
-                      <td>{coupon.category}</td>
-                      <td>
-                        <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="coupon-list">
-            <h2>할인 쿠폰 카테고리별 쿠폰 목록</h2>
-            <table className="coupon-table">
-              <thead>
-                <tr>
-                  <th>할인 쿠폰 이름</th>
-                  <th>사용 포인트</th>
-                  <th>카테고리</th>
-                  <th>동작</th>
-                </tr>
-              </thead>
-              <tbody>
-                {couponList
-                  .filter((coupon) => coupon.category === 'coupon')
-                  .map((coupon) => (
-                    <tr key={coupon.id}>
-                      <td>{coupon.name}</td>
-                      <td>{coupon.usepoint}</td>
-                      <td>{coupon.category}</td>
-                      <td>
-                        <button onClick={() => handleDeleteCoupon(coupon.id)}>Delete</button>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div className="admin-section">
-        <h2>Mileage Tracking</h2>
+
+  {/* Discount Coupon List Section */}
+  <div className="coupon-list">
+    <h2>할인 쿠폰 카테고리별 쿠폰 목록</h2>
+    <table className="coupon-table">
+      <thead>
+        <tr>
+          <th>할인 쿠폰 이름</th>
+          <th>사용 포인트</th>
+          <th>카테고리</th>
+          <th>동작</th>
+        </tr>
+      </thead>
+      <tbody>
+        {couponList
+          .filter((coupon) => coupon.category === 'coupon')
+          .map((coupon) => (
+            <tr key={coupon.id}>
+              <td>{coupon.name}</td>
+              <td>{coupon.usepoint}</td>
+              <td>{coupon.category}</td>
+              <td>
+                <button onClick={() => handleDeleteCoupon(coupon.id)}>삭제</button>
+              </td>
+            </tr>
+          ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div className="admin-section" style={{ float: 'left', width: '100%' }}>
+<h2>유저 마일리지 사용 내역</h2>
         <table className="mileage-table">
           <thead>
             <tr>
@@ -348,8 +361,9 @@ const RowAdminPage = () => {
             다음 페이지
           </button>
         </div>
-        <Bar data={chartData} options={chartOptions} />
       </div>
+      <h2>지역별 유저수 그래프</h2>
+      <Bar data={chartData} options={chartOptions} />
     </div>
   );
 };
