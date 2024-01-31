@@ -36,15 +36,18 @@ const SignupPage = () => {
           aiCategory: aiCategory,
           infraCategory: infraCategory,
           isSubscribed: isSubscribed,
+        }, {
+          timeout: 30000, // 타임아웃을 10초로 설정 (원하는 시간으로 조절 가능)
+          // 다른 옵션들도 필요한 경우 여기에 추가
         });
-
+  
         // Use SweetAlert for success message
         Swal.fire({
           title: '회원가입이 완료되었습니다.',
           icon: 'success',
           confirmButtonText: '확인',
         });
-
+  
         navigate('/');
       } else {
         // Use SweetAlert for validation error
@@ -56,10 +59,13 @@ const SignupPage = () => {
       }
     } catch (error) {
       console.error('회원가입 실패', error);
-
-      // Use SweetAlert for failure message
+  
+      // Check if the error response contains a message
+      const errorMessage = error.response?.data?.message || '회원가입에 실패했습니다. 다시 시도해주세요.';
+  
+      // Use SweetAlert to display the error message
       Swal.fire({
-        title: '회원가입에 실패했습니다. 다시 시도해주세요.',
+        title: errorMessage,
         icon: 'error',
         confirmButtonText: '확인',
       });
