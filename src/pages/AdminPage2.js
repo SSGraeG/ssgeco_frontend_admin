@@ -8,6 +8,7 @@ import AiChart from '../chart/AiChart';
 import { URL } from '../BaseURL';
 import '../css/Admin.css'; // 전역 스타일 파일 가져오기
 import '../css/styles.css'; // 전역 스타일 파일 가져오기
+// import Swal from 'sweetalert2';
 
 
 const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
@@ -127,7 +128,6 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
         return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
       });
     }
-
     return (
       <table className="table mt-4 table-striped table-bordered">
         <thead className="thead-dark">
@@ -165,7 +165,51 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
       </table>
     );
   };
-
+  const EmptyTableRow = () => {
+    // const handleApproval = () => {
+    //   // Show SweetAlert confirmation
+    //   Swal.fire({
+    //     title: '승인되었습니다.',
+    //     icon: 'success',
+    //     confirmButtonText: '확인',
+    //   });
+    // };
+  
+    return (
+      <table className="table mt-4 table-striped table-bordered">
+        <br></br><br></br><br></br><br></br><br></br>
+        <thead>
+          <tr>
+            <th colSpan="6" style={{ textAlign: 'center' }}>
+              <h2 style={{ margin: 0 }}>구독 관리</h2>
+            </th>
+          </tr>
+          <tr>
+            <th>신청 기업명</th>
+            <th>AI 적용</th>
+            <th>이메일</th>
+            <th>연락처</th>
+            <th>승인</th>
+            <th>거부</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {/* <td>대한 통운</td>
+            <td>Delivery</td>
+            <td>newUser@example.com</td>
+            <td>010-xxxx-xxxx</td>
+            <td>
+              <button onClick={handleApproval}>승인</button>
+            </td> */}
+            {/* <td>
+              <button onClick={() => console.log('거부')}>거부</button>
+            </td> */}
+          </tr>
+        </tbody>
+      </table>
+    );
+  };
   return (
     <div>
       {isAdmin || userRole === '1' ? (
@@ -188,24 +232,32 @@ const AdminPage2 = ({ isAdmin , companyUserCounts }) => {
           {renderTable()}
 
           <div className="row mt-4">
+            <hr></hr>
             <div className="col-md-3">
               <div className="mb-4">
+              <br></br><br></br><br></br><br></br>
                 <h4 className="text-center">구독자 비율 차트</h4>
                 <DonutChart win={DonutChartData.win} defeat={DonutChartData.defeat} />
               </div>
             </div>
             <div className="col-md-3">
               <div className="mb-4">
+              <br></br><br></br><br></br><br></br>
                 <h4 className="text-center">카테고리별 비율 차트</h4>
                 <PChart Delivery={PChartData.Delivery} ECumus={PChartData.ECumus} Other={PChartData.Other} />
               </div>
             </div>
             <div className="col-md-3">
               <div className="mb-4">
+              <br></br><br></br><br></br><br></br>
                 <h4 className="text-center">AI 구독 비율 차트</h4>
                 <AiChart a1={AiChartData.a1} a2={AiChartData.a2} a3={AiChartData.a3} />
               </div>
+              <br></br><br></br><br></br><br></br>
+              <br></br><br></br>
+
             </div>
+            <EmptyTableRow />
           </div>
           </>
       ) : (
