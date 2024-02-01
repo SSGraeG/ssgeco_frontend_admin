@@ -36,30 +36,37 @@ const SignupPage = () => {
           aiCategory: aiCategory,
           infraCategory: infraCategory,
           isSubscribed: isSubscribed,
+        }, {
+          timeout: 30000, // 타임아웃을 10초로 설정 (원하는 시간으로 조절 가능)
+          
+          // 다른 옵션들도 필요한 경우 여기에 추가
         });
-
+  
         // Use SweetAlert for success message
         Swal.fire({
-          title: '회원가입이 완료되었습니다.',
+          title: '계약이 완료되었습니다.',
           icon: 'success',
           confirmButtonText: '확인',
         });
-
+  
         navigate('/');
       } else {
         // Use SweetAlert for validation error
         Swal.fire({
-          title: '모든 필드를 입력하세요.',
-          icon: 'error',
+          title: '계약이 완료됬습니다!!.',
+          icon: 'success',
           confirmButtonText: '확인',
         });
       }
     } catch (error) {
       console.error('회원가입 실패', error);
-
-      // Use SweetAlert for failure message
+  
+      // Check if the error response contains a message
+      const errorMessage = error.response?.data?.message || '회원가입에 실패했습니다. 다시 시도해주세요.';
+  
+      // Use SweetAlert to display the error message
       Swal.fire({
-        title: '회원가입에 실패했습니다. 다시 시도해주세요.',
+        title: errorMessage,
         icon: 'error',
         confirmButtonText: '확인',
       });
@@ -74,7 +81,7 @@ const SignupPage = () => {
       <div className="login-content">
         <form>
           <img src="https://raw.githubusercontent.com/sefyudem/Responsive-Login-Form/master/img/avatar.svg" alt="avatar" />
-          <h2 className="title">회원가입</h2>
+          <h2 className="title">계약신청</h2>
 
           <Form.Group controlId="formUsername">
             <Form.Label>이름:</Form.Label>
@@ -132,8 +139,18 @@ const SignupPage = () => {
           <Form.Check type="checkbox" label="구독 여부" checked={isSubscribed} onChange={(e) => setIsSubscribed(e.target.checked)} />
         </Form.Group>
 
-        <Button variant="primary" onClick={handleSignup}>
-            회원가입
+        <Button variant="primary" onClick={() => Swal.fire({
+            title: '계약을 신청하시겠습니까?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: '네',
+            cancelButtonText: '아니오',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              handleSignup();
+            }
+          })}>
+            계약신청
           </Button>
         </form>
       </div>

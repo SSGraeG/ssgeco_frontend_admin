@@ -123,6 +123,11 @@ const Home = () => {
                       Admin
                     </button>
                   </li>
+                  <li className="list-inline-item ml-3">
+                    <Link to="/signup" className="btn btn-success">
+                      계약
+                    </Link>
+                  </li>
                 </>
               ) : (
                 <>
@@ -136,6 +141,7 @@ const Home = () => {
                       회원가입
                     </Link>
                   </li>
+                  
                 </>
               )}
             </ul>
